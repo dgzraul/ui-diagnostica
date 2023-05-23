@@ -1,0 +1,9 @@
+# Changelog 
+El versionamiento deberá contener la siguiente estructura ```YYYY.M.D.deploy_number```.
+
+Los comentarios descriptivos estarán compuesto por los prefijos _**Documentation**_, _**Hotfix**_, _**Feature**_, _**Delete**_.
+
+Cada vez que se agregue una nueva versión en cualquier tipo de cambio deberá modificar de igual forma en los archivo _**README**_ y _**package.json**_. 
+
+## v0.0.0.1
+  - _**Init**_: Inicio de proyecto

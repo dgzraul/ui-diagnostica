@@ -43,6 +43,33 @@
                   "maximumError": "4kb"
                 }
               ],
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "qa": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kb",
+                  "maximumError": "1mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "2kb",
+                  "maximumError": "4kb"
+                }
+              ],
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.qa.ts"
+                }
+              ],
               "outputHashing": "all"
             },
             "development": {
@@ -61,6 +88,9 @@
           "configurations": {
             "production": {
               "browserTarget": "ui-diagnostica:build:production"
+            },
+            "qa": {
+              "browserTarget": "ui-diagnostica:build:qa"
             },
             "development": {
               "browserTarget": "ui-diagnostica:build:development"
