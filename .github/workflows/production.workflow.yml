@@ -1,0 +1,40 @@
+name: Master workflow - Build to production
+
+on:
+  pull_request:
+    types: closed
+    branches:
+      - master
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3 #checkout to the repository
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v3 #this installs node and npm
+      with:
+        node-version: '18.16.0'
+
+    - name: Cache dependencies
+      uses: actions/cache@v1 #this allows for re-using node_modules caching, making builds a bit faster
+      with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-   
+    
+    - name: Install dependencies
+      run: npm install
+
+    - name: Build project 
+      run: npm run build:production
+
+    - name: Deploy
+      uses: JamesIves/github-pages-deploy-action@releases/v4
+      with:
+        branch: production
+        folder: dist/ui-diagnostica

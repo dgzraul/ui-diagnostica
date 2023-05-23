@@ -2,19 +2,19 @@
   "name": "ui-diagnostica",
   "version": "0.0.0",
   "scripts": {
-    "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
-    "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "start:dev": "ng serve --configuration development --host 0.0.0.0 --disable-host-check",
+    "build:production": "ng build --configuration production",
+    "build:qa": "ng build --configuration qa"
   },
   "private": true,
   "dependencies": {
     "@angular/animations": "^16.0.0",
+    "@angular/cdk": "^16.0.1",
     "@angular/common": "^16.0.0",
     "@angular/compiler": "^16.0.0",
     "@angular/core": "^16.0.0",
     "@angular/forms": "^16.0.0",
+    "@angular/material": "^16.0.1",
     "@angular/platform-browser": "^16.0.0",
     "@angular/platform-browser-dynamic": "^16.0.0",
     "@angular/router": "^16.0.0",
