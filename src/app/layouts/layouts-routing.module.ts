@@ -9,10 +9,16 @@ import { PatientsModule } from '../features/patients/patients.module';
 import { AuthenticationLayoutComponent } from './authentication-layout/authentication-layout.component';
 import { MainLayoutComponent } from './main-layout/main-layout.component';
 
+import { AuthGuard, redirectLoggedInTo, redirectUnauthorizedTo } from '@angular/fire/auth-guard';
+const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['autenticacion']);
+const redirectLoggedInToHome = () => redirectLoggedInTo(['app']);
+
 const routes: Routes = [
   {
     path: 'autenticacion',
     component: AuthenticationLayoutComponent,
+    canActivate: [AuthGuard],
+    data: { authGuardPipe: redirectLoggedInToHome },
     children: [
       { path: '', loadChildren: () => AuthenticationModule },
       { path: '**', redirectTo: '' }
@@ -21,6 +27,8 @@ const routes: Routes = [
   {
     path: 'app',
     component: MainLayoutComponent,
+    canActivate: [AuthGuard],
+    data: { authGuardPipe: redirectUnauthorizedToLogin },
     children: [
       { path: '', loadChildren: () => PatientsModule },
       { path: '**', redirectTo: '' }

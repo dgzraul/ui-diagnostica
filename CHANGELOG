@@ -5,5 +5,9 @@ Los comentarios descriptivos estarán compuesto por los prefijos _**Documentatio
 
 Cada vez que se agregue una nueva versión en cualquier tipo de cambio deberá modificar de igual forma en los archivo _**README**_ y _**package.json**_. 
 
+## Inprogress
+  - _**Feature**_: Navegación
+  - _**Feature**_: Integración de firebase 
+
 ## v0.0.0.1
   - _**Init**_: Inicio de proyecto
