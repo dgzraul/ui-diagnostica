@@ -19,7 +19,7 @@ export class MainLayoutComponent {
   async logout() {
     try {
       await this.authenticationService.logout();
-      this.router.navigate(['autenticacion']);
+      this.router.navigate(['authentication']);
     } catch (error) {
       alert(error);
     }

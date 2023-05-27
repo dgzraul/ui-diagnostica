@@ -18,7 +18,7 @@ export class SingInComponent {
   async singin() {
     try {
       await this.service.signInWithEmailAndPassword('dgzraul.web@gmail.com', 'dgzraul1402');
-      this.router.navigate(['/app']);
+      this.router.navigate(['']);
     } catch (error) {
       alert(error);
     }

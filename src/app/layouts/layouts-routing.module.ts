@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { redirectLoggedInTo, redirectUnauthorizedTo, canActivate } from '@angular/fire/auth-guard';
 
 // Modules
 import { AuthenticationModule } from '../features/authentication/authentication.module';
@@ -9,35 +10,31 @@ import { PatientsModule } from '../features/patients/patients.module';
 import { AuthenticationLayoutComponent } from './authentication-layout/authentication-layout.component';
 import { MainLayoutComponent } from './main-layout/main-layout.component';
 
-import { AuthGuard, redirectLoggedInTo, redirectUnauthorizedTo } from '@angular/fire/auth-guard';
-const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['autenticacion']);
-const redirectLoggedInToHome = () => redirectLoggedInTo(['app']);
-
 const routes: Routes = [
   {
-    path: 'autenticacion',
+    path: 'authentication',
     component: AuthenticationLayoutComponent,
-    canActivate: [AuthGuard],
-    data: { authGuardPipe: redirectLoggedInToHome },
+    ...canActivate(() => redirectLoggedInTo([''])),
     children: [
       { path: '', loadChildren: () => AuthenticationModule },
       { path: '**', redirectTo: '' }
     ]
   },
+  
   {
-    path: 'app',
+    path: '',
     component: MainLayoutComponent,
-    canActivate: [AuthGuard],
-    data: { authGuardPipe: redirectUnauthorizedToLogin },
+    ...canActivate(() => redirectUnauthorizedTo(['authentication'])),
     children: [
       { path: '', loadChildren: () => PatientsModule },
       { path: '**', redirectTo: '' }
     ]
   },
-  // {
-  //   path: '',
-  //   redirectTo: 'autenticacion'
-  // }
+
+  {
+    path: '**',
+    redirectTo: 'authentication'
+  }
 ];
 
 @NgModule({
