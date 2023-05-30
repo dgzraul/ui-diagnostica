@@ -9,6 +9,7 @@ Cada vez que se agregue una nueva versión en cualquier tipo de cambio deberá m
   - _**Feature**_: Navegación
   - _**Feature**_: Integración de firebase
   - _**Feature**_: Autenticación y reglas de acceso a rutas privadas 
+  - _**Feature**_: Inicio de sesión - diseño desktop
 
 ## v0.0.0.1
   - _**Init**_: Inicio de proyecto

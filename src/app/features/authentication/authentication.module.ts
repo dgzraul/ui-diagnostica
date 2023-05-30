@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 // Modules
 import { AuthenticationRoutingModule } from './authentication-routing.module';
@@ -15,6 +16,8 @@ import { SingInComponent } from './sing-in/sing-in.component';
   ],
   imports: [
     CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
     AuthenticationRoutingModule
   ]
 })

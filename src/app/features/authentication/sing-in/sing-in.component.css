@@ -1,0 +1,114 @@
+.authentication-section {
+  width: 100% !important;
+  height: 100% !important;
+  margin: 0px;
+  padding: 0px;    
+}
+
+.image-section {
+  margin: 0px;
+  padding: 0px;
+  position: relative;
+}
+
+.emblematic-image {
+  width: 90%;
+  margin: 50px 0px 0px 50px;
+  padding: 0px;
+}
+
+.authentication-section {
+  padding: 30px 55px 30px 55px;
+  margin: 10px 0px 10px 0px;
+}
+
+.card {
+  border-radius: 20px;
+  background-color: #ffffff;
+  -webkit-box-shadow: 0px 3px 13px 0px rgba(0,0,0,0.21); 
+  box-shadow: 0px 3px 13px 0px rgba(0,0,0,0.21);
+}
+
+.login-title {
+  font-size: 25px;
+}
+
+.login-subtitle {
+  font-size: 15px;
+  color: #a5a9b1;
+}
+
+.login-recovery-password {
+  color: #003F7D;
+
+}
+.login-submit-button {
+  width: 100%;
+}
+
+.login-divisor {
+  color: #a5a9b1;
+}
+
+.btn-image {
+  float: left;
+  margin-left: 25%;
+  margin-top: -0px;
+  margin-right:-30px;
+  position: relative;
+  z-index: 2;
+}
+
+.redirect-to-singup-label {
+  color: #a5a9b1;
+}
+
+.redirect-to-singup-btn {
+  color: #003F7D;
+}
+
+/* RESPONSIVE STYLES */
+/* Materialize Desktop */
+@media only screen and (max-width: 1380px) {
+  .imagen-emblematica {
+    width: 90%;
+    margin: 125 0px 0px 70px;
+    padding: 0px;
+  }
+
+  .panel-autenticacion {
+    margin: 90px 0px 60px 0px;
+  }
+}
+
+/* Materialize Tablets */
+@media only screen and (max-width: 992px) {
+  .authentication-section {
+    height: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+  
+  .image-section {
+    display: none;
+  }
+
+  .panel-autenticacion {
+    margin: 145px 0px 60px 0px;
+  }
+}
+
+/* Materialize Mobile */
+@media only screen and (max-width: 600px) {
+  .card {
+    -webkit-box-shadow: none; 
+    box-shadow: none;
+    background-color: #f6f7f9;
+  }
+
+  .panel-autenticacion {
+    padding: 20px 25px 20px 25px;
+    margin-top: 100px;
+  }
+}
