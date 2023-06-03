@@ -1,8 +1,12 @@
 import { Component } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { passwordMatchValidator } from 'src/app/core/validators/passwordMatch.validator';
+
+// Services
 import { AuthenticationService } from '../authentication.service';
+
+// Validators
+import { passwordValidator, passwordMatchValidator, emailValidator } from 'src/app/core/validators';
 
 @Component({
   selector: 'app-sing-up',
@@ -19,16 +23,10 @@ export class SingUpComponent {
     private service: AuthenticationService
   ) {
     this.form = this.formBuilder.group({
-      email: this.formBuilder.control(null, [Validators.required, Validators.email]),
-      password: this.formBuilder.control(null, [Validators.required])
-    }, {
-      validators: [passwordMatchValidator]
+      email: this.formBuilder.control(null, [Validators.required, emailValidator]),
+      password: this.formBuilder.control(null, [Validators.required, passwordValidator]),
+      confirmPassword: this.formBuilder.control(null, [Validators.required, passwordMatchValidator])
     });
-
-    this.IOEmail?.valueChanges.subscribe(a => {
-      console.log(this.IOEmail?.errors);
-      
-    })
   }
 
   togglePasswordType(): void {
@@ -71,5 +69,9 @@ export class SingUpComponent {
 
   get IOPassword(): AbstractControl<any, any> | null  {
     return this.form.get('password');
+  }
+
+  get IOConfirmPassword(): AbstractControl<any, any> | null  {
+    return this.form.get('confirmPassword');
   }
 }

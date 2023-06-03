@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Auth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, signOut, UserCredential, FacebookAuthProvider } from '@angular/fire/auth';
+import { Auth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, signOut, UserCredential, FacebookAuthProvider, sendPasswordResetEmail } from '@angular/fire/auth';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +10,13 @@ export class AuthenticationService {
     private auth: Auth
   ) { }
 
-  signInWithEmailAndPassword(email: string, password: string): Promise<UserCredential> {    
+  /**
+   * Authentication with email and password (firebase)
+   * @param email 
+   * @param password 
+   * @returns 
+   */
+  public signInWithEmailAndPassword(email: string, password: string): Promise<UserCredential> {    
     return new Promise(async (resolve, reject) => {
       try {        
         const credential = await signInWithEmailAndPassword(this.auth, email, password);
@@ -41,13 +47,23 @@ export class AuthenticationService {
     });
   }
 
-  createUserWithEmailAndPassword(email: string, password: string): Promise<UserCredential> {
-    return new Promise((resolve, reject) => {
+  /**
+   * Register with email and password (firebase)
+   * @param email 
+   * @param password 
+   * @returns 
+   */
+  public createUserWithEmailAndPassword(email: string, password: string): Promise<UserCredential> {
+    return new Promise(async (resolve, reject) => {
       try {
-        const credential = createUserWithEmailAndPassword(this.auth, email, password);
+        const credential = await createUserWithEmailAndPassword(this.auth, email, password);
         return resolve(credential);
       } catch (error: any) {
         switch(error.code) {
+          case 'auth/email-already-in-use': {
+            return reject('El correo electrónico se encuentra en uso');
+          }
+
           case 'auth/account-exists-with-different-credential': {
             return reject('Detectamos una cuenta con el mismo correo pero con otra forma de autenticarse');
           }
@@ -73,7 +89,11 @@ export class AuthenticationService {
     });
   }
 
-  loginWithGoogle(): Promise<UserCredential> {    
+  /**
+   * Authentication / register with google provider (firebase)
+   * @returns Promise<UserCredential>
+   */
+  public loginWithGoogle(): Promise<UserCredential> {    
     return new Promise(async (resolve, reject) => {
       try {
         let credential = await signInWithPopup(this.auth, new GoogleAuthProvider());
@@ -106,10 +126,12 @@ export class AuthenticationService {
     
   }
 
-  loginWithFacebook(): Promise<UserCredential> {
-    return new Promise(async (resolve, reject) => {
-      console.log(1111111);
-      
+  /**
+   * Authentication / register with facebook provider (firebase)
+   * @returns 
+   */
+  public loginWithFacebook(): Promise<UserCredential> {
+    return new Promise(async (resolve, reject) => {      
       try {
         let credential = await signInWithPopup(this.auth, new FacebookAuthProvider())
         return resolve(credential);
@@ -138,11 +160,48 @@ export class AuthenticationService {
         }
       }
     });
-    
   }
 
-  logout() {
+  sendPasswordResetEmail(email: string): Promise<void> {
+    return new Promise(async (resolve, reject) => {
+      try {
+        await sendPasswordResetEmail(this.auth, email);
+        return resolve();
+      } catch (error: any) {        
+        switch(error.code) {
+          case 'auth/invalid-email': {
+            return reject('El formato del correo electrónico es invalido');
+          }
+
+          case 'auth/user-disabled': {
+            return reject('La cuenta ha sido deshabilitada');
+          }
+  
+          case 'auth/user-not-found': {
+            return reject('No se encontró ningún usuario con la dirección de correo electrónico proporcionado');
+          }
+  
+          case 'auth/too-many-requests': {
+            return reject('Se ha alcanzado el límite de solicitudes. Espera un momento antes de intentarlo nuevamente.');
+          } 
+
+          case 'auth/missing-email': {
+            return reject('No se ha detectado ningún correo electrónico');
+          }          
+  
+          default: {
+            return reject('Lo sentimos, algo ha salido mal, inténtalo más tarde');
+          }
+        }
+      }
+    });
+  }
+
+  /**
+   * Close current sessión (firebase)
+   * @returns 
+   */
+  public logout(): Promise<void> {
     return signOut(this.auth);
   }
-
 }

@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import 'firebase/auth';
 
 // Services
 import { AuthenticationService } from '../authentication.service';
+
+// Validators
+import { emailValidator } from 'src/app/core/validators';
 
 @Component({
   selector: 'app-sing-in',
@@ -21,7 +23,7 @@ export class SingInComponent {
     private router: Router
   ) { 
     this.form = this.formBuilder.group({
-      email: this.formBuilder.control(null, [Validators.required, Validators.email]),
+      email: this.formBuilder.control(null, [Validators.required, emailValidator]),
       password: this.formBuilder.control(null, [Validators.required])
     }); 
   }
@@ -54,6 +56,24 @@ export class SingInComponent {
     try {
       await this.service.loginWithFacebook();
       this.router.navigate(['']);
+    } catch (error: any) {
+      M.toast({html: error});
+    }
+  }
+
+  public async sendPasswordResetEmail(): Promise<void> {
+    if(this.IOEmail?.errors) {
+      if(this.IOEmail?.hasError('required')) {
+        M.toast({html: 'Por favor Ingrese su correo electrónico'});
+      } else if(this.IOEmail?.hasError('invalidEmail')) {
+        M.toast({html: 'El formato del correo electrónico es invalido'});
+      }
+      return; 
+    }
+
+    try {
+      await this.service.sendPasswordResetEmail(this.IOEmail?.value);
+      M.toast({html: 'Correo de recuperación enviado'});
     } catch (error: any) {
       M.toast({html: error});
     }

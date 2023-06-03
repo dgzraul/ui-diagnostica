@@ -10,8 +10,9 @@
 
 .login-recovery-password {
   color: #003F7D;
-
+  cursor: pointer;
 }
+
 .login-submit-button {
   width: 100%;
 }
