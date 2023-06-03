@@ -1,0 +1,44 @@
+.login-title {
+  font-size: 25px;
+}
+
+.login-subtitle {
+  font-size: 15px;
+  color: #a5a9b1;
+}
+
+.login-recovery-password {
+  color: #003F7D;
+
+}
+.login-submit-button {
+  width: 100%;
+}
+
+.login-divisor {
+  color: #a5a9b1;
+}
+
+.redirect-to-singup-label {
+  color: #a5a9b1;
+}
+
+.redirect-to-singup-btn {
+  color: #003F7D;
+}
+
+/* RESPONSIVE STYLES */
+/* Materialize Desktop */
+@media only screen and (max-width: 1380px) {
+  
+}
+
+/* Materialize Tablets */
+@media only screen and (max-width: 992px) {
+ 
+}
+
+/* Materialize Mobile */
+@media only screen and (max-width: 600px) {
+  
+}
