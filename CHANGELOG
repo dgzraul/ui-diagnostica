@@ -10,6 +10,7 @@ Cada vez que se agregue una nueva versión en cualquier tipo de cambio deberá m
   - _**Feature**_: Integración de firebase
   - _**Feature**_: Autenticación y reglas de acceso a rutas privadas 
   - _**Feature**_: Autenticación y registro con formularios reactivos y validaciones
+  - _**Feature**_: HTTP Interceptor para tokens y cierre de sesión forzado
 
 ## v0.0.0.1
   - _**Init**_: Inicio de proyecto

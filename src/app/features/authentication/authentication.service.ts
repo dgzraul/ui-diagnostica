@@ -1,14 +1,20 @@
 import { Injectable } from '@angular/core';
-import { Auth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, signOut, UserCredential, FacebookAuthProvider, sendPasswordResetEmail } from '@angular/fire/auth';
+import { Auth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, signOut, UserCredential, FacebookAuthProvider, sendPasswordResetEmail, User } from '@angular/fire/auth';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AuthenticationService {
+export class AuthenticationService { 
+  private onFirebaseAccountStateChangeSubject: BehaviorSubject<User | null>;
+  public onFirebaseAccountStateChange$: Observable<User | null>;
 
   constructor(
     private auth: Auth
-  ) { }
+  ) { 
+    this.onFirebaseAccountStateChangeSubject = new BehaviorSubject<User | null>(this.auth.currentUser);
+    this.onFirebaseAccountStateChange$ = this.onFirebaseAccountStateChangeSubject.asObservable();
+  }
 
   /**
    * Authentication with email and password (firebase)
@@ -162,6 +168,10 @@ export class AuthenticationService {
     });
   }
 
+  /**
+   * Recovery password (firebase)
+   * @returns 
+   */
   sendPasswordResetEmail(email: string): Promise<void> {
     return new Promise(async (resolve, reject) => {
       try {
@@ -198,10 +208,24 @@ export class AuthenticationService {
   }
 
   /**
+   * Currently firebase account
+   * @returns
+   */
+  public get firebaseAccount(): User | null {
+    return this.auth.currentUser; 
+  }
+
+  /**
    * Close current sessión (firebase)
    * @returns 
    */
-  public logout(): Promise<void> {
-    return signOut(this.auth);
+  public logout(): Observable<void> {
+    return new Observable<void>((subscriber) => {
+      signOut(this.auth).then(() => {
+        this.onFirebaseAccountStateChangeSubject.next(null);
+        subscriber.next();
+        subscriber.complete();
+      });
+    });
   }
 }
