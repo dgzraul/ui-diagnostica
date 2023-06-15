@@ -22,8 +22,10 @@ const routes: Routes = [
     component: MainLayoutComponent,
     ...canActivate(() => redirectUnauthorizedTo(['authentication'])),
     children: [
+      { path: 'user', loadChildren: () => import('../features/users/users.module').then(m => m.UsersModule) },
+      { path: 'office', loadChildren: () => import('../features/offices/offices.module').then(m => m.OfficesModule) },
       { path: '', loadChildren: () => import('../features/patients/patients.module').then(m => m.PatientsModule) },
-      { path: '**', redirectTo: '' }
+      { path: '**', redirectTo: 'user' }
     ]
   },
 

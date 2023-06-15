@@ -4,7 +4,7 @@ import { User } from 'firebase/auth';
 
 // Serivces
 import { AuthenticationService } from 'src/app/features/authentication/authentication.service';
-import { UserService } from 'src/app/features/user/user.service';
+import { UsersService } from 'src/app/features/users/users.service';
 
 @Component({
   selector: 'app-main-layout',
@@ -13,20 +13,24 @@ import { UserService } from 'src/app/features/user/user.service';
 })
 export class MainLayoutComponent {
   constructor(
-    private userService: UserService,
+    private usersService: UsersService,
     private authenticationService: AuthenticationService,
     private router: Router
   ) {
-    this.userService.verifyRegister(this.authenticationService.firebaseAccount!.uid!).subscribe({
+    this.usersService.verifyRegister(this.authenticationService.firebaseAccount!.uid!).subscribe({
       next: (value) => {
-        
+        if(value.existingAccount == false)  {
+          this.router.navigate(['/user/create_profile']);          
+        } else {
+          this.router.navigate(['/office/default_register']);
+        }
       }
     });    
 
     // Listen sessión
     this.authenticationService.onFirebaseAccountStateChange$.subscribe((firebaseAccount: User | null) => {      
       if(firebaseAccount == null) {
-        this.router.navigate(['authentication']);    
+        this.router.navigate(['/authentication']);    
       }      
     });
   }

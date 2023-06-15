@@ -24,12 +24,6 @@ export class AuthInterceptorService implements HttpInterceptor {
               switchMap(() => { throw error })
             );
           }
-
-          default: {
-            return this.authenticationService.logout().pipe(
-              switchMap(() => { throw error })
-            );
-          }
         }
         throw error;
       })
