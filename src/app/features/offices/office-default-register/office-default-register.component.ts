@@ -1,6 +1,10 @@
 import { Component } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+
+// Services
 import { SpecialitiesService } from '../../specialities/specialities.service';
+import { OfficesService } from '../offices.service';
 
 @Component({
   selector: 'app-office-default-register',
@@ -13,10 +17,11 @@ export class OfficeDefaultRegisterComponent {
 
   constructor(
     private formBuilder: FormBuilder,
-    private specialitiesService: SpecialitiesService
+    private specialitiesService: SpecialitiesService,
+    private officeService: OfficesService,
+    private router: Router
   ) {
     this.form = this.formBuilder.group({
-      name: 'principal',
       specialities: this.formBuilder.array([])
     });
 
@@ -31,6 +36,16 @@ export class OfficeDefaultRegisterComponent {
 
   submit($event: Event) {
     $event.preventDefault();
+
+    let parse = {
+      specialities: this.form.value?.specialities.map((x: any) => x.id)
+    }
+    
+    this.officeService.createDefault(parse).subscribe({
+      next: (value) => {
+        this.router.navigate(['']);
+      }
+    });
   }
 
   // Speciality controls
