@@ -43,7 +43,7 @@ export class OfficeDefaultRegisterComponent {
     
     this.officeService.createDefault(parse).subscribe({
       next: (value) => {
-        this.router.navigate(['']);
+        this.router.navigate(['/patient']);
       }
     });
   }

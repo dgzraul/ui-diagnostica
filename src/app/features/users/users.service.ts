@@ -11,6 +11,10 @@ export class UsersService {
 
   constructor(private http: HttpClient) { }
 
+  profile(data: any): Observable<any> {
+    return this.http.post<any>(`${this.api}/profile`, data);
+  }
+
   verifyRegister(firebaseUID: string): Observable<any> {
     return this.http.get<any>(`${this.api}/verify_firebase_account`, {params: {firebaseUID: firebaseUID}});
   }
