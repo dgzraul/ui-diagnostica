@@ -20,4 +20,16 @@ export class PatientsService {
   register(data: any): Observable<any> {
     return this.http.post<any>(`${this.api}`, data);
   }
+
+  findById(id: string): Observable<any> {
+    return this.http.get<any>(`${this.api}/${id}`);
+  }
+
+  update(id: string, data: any): Observable<any> {
+    return this.http.put<any>(`${this.api}/${id}`, data);
+  }
+
+  delete(id: string): Observable<any> {
+    return this.http.delete<any>(`${this.api}/${id}`);
+  }
 }

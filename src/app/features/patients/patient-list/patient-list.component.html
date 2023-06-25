@@ -6,7 +6,7 @@
   </div>
 
   <div class="row">
-    <div class="col s12 card" *ngFor="let patient of patients">
+    <div class="col s12 card" *ngFor="let patient of patients" [routerLink]="['/patient/detail', patient._id]">
       <p> <strong> email: </strong> {{ patient.email }} </p>
       <p> <strong> phone: </strong> {{ patient.phone }} </p>
       <p> <strong> name: </strong> {{ patient.name }} </p>

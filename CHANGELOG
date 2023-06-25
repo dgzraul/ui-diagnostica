@@ -15,6 +15,9 @@ Cada vez que se agregue una nueva versión en cualquier tipo de cambio deberá m
   - _**Feature**_: Estructura de registro de usuario
   - _**Feature**_: Listado de pacientes
   - _**Feature**_: Registrar pacientes
+  - _**Feature**_: Actualizar pacientes
+  - _**Feature**_: Eliminar pacientes
+  - _**Feature**_: Detalle pacientes
 
 ## v0.0.0.1
   - _**Init**_: Inicio de proyecto

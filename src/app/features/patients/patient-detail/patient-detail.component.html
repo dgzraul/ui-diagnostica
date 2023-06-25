@@ -1,0 +1,20 @@
+<ng-container>
+  <div *ngIf="patient">
+    <div class="row">
+      <div class="col s12">
+        <p> <strong> email: </strong> {{ patient.email }} </p>
+        <p> <strong> phone: </strong> {{ patient.phone }} </p>
+        <p> <strong> name: </strong> {{ patient.name }} </p>
+        <p> <strong> lastname: </strong> {{ patient.lastname }} </p>
+        <p> <strong> secondLastname: </strong> {{ patient.secondLastname }} </p>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col s12">
+        <a [routerLink]="['/patient/update', patient._id]"> Actualizar </a>
+        <a (click)="delete()"> Eliminar </a>
+      </div>
+    </div>
+  </div>
+</ng-container>

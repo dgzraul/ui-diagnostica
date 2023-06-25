@@ -31,8 +31,6 @@ export class MainLayoutComponent {
             } else {
               if(profile.offices.length <= 0) {
                 this.router.navigate(['/office/default_register']);
-              } else {
-                this.router.navigate(['/patient']);
               }
             }
           },
