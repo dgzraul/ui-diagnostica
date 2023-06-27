@@ -1,0 +1,29 @@
+.section-logo {}
+
+.home-logo {
+  width: 80%;
+  height: auto;
+}
+
+/* RESPONSIVE STYLES */
+/* Materialize Desktop */
+@media only screen and (max-width: 1380px) {
+  
+}
+
+/* Materialize Tablets */
+@media only screen and (max-width: 992px) {
+  .section-logo {
+    margin-bottom: 4em;
+  }
+
+  .home-logo {
+    width: 40%;
+    height: auto;
+  }
+}
+
+/* Materialize Mobile */
+@media only screen and (max-width: 600px) {
+  
+}

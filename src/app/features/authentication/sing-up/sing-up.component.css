@@ -1,44 +1,68 @@
+/* form section */
+.section-form {
+
+}
+
 .login-title {
-  font-size: 25px;
+  font-size: 51px;
+  font-weight: 600;
 }
 
 .login-subtitle {
   font-size: 15px;
-  color: #a5a9b1;
 }
 
 .login-recovery-password {
+  margin-top: -10px;
   color: #003F7D;
-
-}
-.login-submit-button {
-  width: 100%;
+  cursor: pointer;
 }
 
 .login-divisor {
   color: #a5a9b1;
 }
 
+button.social-auth {
+  height: 3rem;
+  width: 3rem;
+  padding: 10px;
+  border-radius: 50%;
+  background-color: white;
+  
+  box-shadow: 1px 1px 10px -1px rgba(0,63,125,0.6);
+  -webkit-box-shadow: 1px 1px 10px -1px rgba(0,63,125,0.6);
+  -moz-box-shadow: 1px 1px 10px -1px rgba(0,63,125,0.6);  
+}
+
+button.social-auth:hover {
+  transform: scale(1.05)
+}
+
 .redirect-to-singup-label {
-  color: #a5a9b1;
+  color: #000;
 }
 
 .redirect-to-singup-btn {
   color: #003F7D;
+  font-weight: 600;
+}
+
+.separtor {
+  margin-top: 2em;
 }
 
 /* RESPONSIVE STYLES */
 /* Materialize Desktop */
 @media only screen and (max-width: 1380px) {
-  
 }
 
 /* Materialize Tablets */
 @media only screen and (max-width: 992px) {
- 
+  .section-form {
+    padding: 20px;
+  }
 }
 
 /* Materialize Mobile */
 @media only screen and (max-width: 600px) {
-  
 }

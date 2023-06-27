@@ -1,19 +1,3 @@
-section.main {
-  margin-top: 5%;
-  margin-bottom: 0em;
-}
-
-/* logo section */
-.section-logo {
-
-}
-
-.home-logo {
-  width: 80%;
-  height: auto;
-}
-
-
 /* form section */
 .section-form {
 
@@ -70,41 +54,15 @@ button.social-auth:hover {
 /* RESPONSIVE STYLES */
 /* Materialize Desktop */
 @media only screen and (max-width: 1380px) {
-  
 }
 
 /* Materialize Tablets */
 @media only screen and (max-width: 992px) {
-  .valign-wrapper {
-    display: grid;    
-  }  
-
-  section.main {
-    margin-top: 5em;
-  }
-
-  .section-logo {
-    margin-bottom: 4em;
-  }
-
-  .home-logo {
-    width: 40%;
-    height: auto;
-  }
-
   .section-form {
     padding: 20px;
   }
-
 }
 
 /* Materialize Mobile */
 @media only screen and (max-width: 600px) {
-  section.main {
-    margin-top: 1em;
-  } 
-  
-  .separtor {
-    
-  }
 }

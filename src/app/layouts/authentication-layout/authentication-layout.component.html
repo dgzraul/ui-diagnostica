@@ -1,3 +1,24 @@
 <ng-container>
-  <router-outlet></router-outlet>  
+  <section class="row">
+    <div class="col s0 m0 l6 section-logo hide-on-small-only center" style="margin-top: calc(100% / 30);">
+      <div class="row" style="margin-top: 0; margin-bottom: 0;">
+        <div class="col s11 offset-s1 left-align valign-wrapper">
+          <img style="width: 2.5%; height: auto; margin-right: 10px;" src="/assets/images/logo.png" alt="logo">
+          <p class="" style="font-weight: 600; font-size: 1.1rem;"> DIAGNOSTICA </p>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col s12">
+          <img class="home-logo" src="/assets/images/home-logo.png" alt="home-logo">
+        </div>
+      </div>
+    </div>
+
+    <div class="col s12 m12 l6">
+      <div [@routeAnimations]="o && o.activatedRouteData && o.activatedRouteData['animation']">
+        <router-outlet #o="outlet"></router-outlet>  
+      </div>
+    </div>
+  </section>
 </ng-container>

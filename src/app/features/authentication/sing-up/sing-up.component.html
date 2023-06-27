@@ -1,10 +1,12 @@
 <ng-container>
-  <div class="row">
-    <div class="col s12 m6">
+  <div class="row" style="margin-top: calc(100% / 10);">
+    <div class="col s12 m12 l6 offset-l3">
       <!-- Header -->
       <div class="row">
         <div class="col s12">
           <p class="login-title"> Registrate! </p>
+        </div>
+        <div class="col s12">
           <p class="login-subtitle" style="margin-top: 5px;"> Gestión médica ágil y efectiva. Accede o regístrate para comenzar. </p>
         </div>
       </div>
@@ -56,33 +58,35 @@
         </div>
     
         <!-- Submit -->
-        <div class="row" style="margin-top: 2em">
+        <div class="row" style="margin-top: 3em">
           <div class="col s12">
-            <button class="login-submit-button" type="submit" [disabled]="form.invalid"> Registrarse </button>
+            <button class="primary-btn" type="submit" [disabled]="form.invalid"> Registrarse </button>
           </div>
         </div>
       </form>
     
-      <div class="row" style="margin-top: 2em;">
+      <!-- Separator -->
+      <div class="row separator">
         <div class="col s12 center">
-          <p class="login-divisor"> También puedes usar </p>
+          <app-separator> También puedes usar </app-separator>
         </div>
       </div>
     
       <!-- Social buttons -->
-      <div class="row" style="margin-top: 2em;">
-        <div class="col s12">
-          <button (click)="submitGoogleSocialAuth()" class="btn-stroked center"> Google </button>
-        </div>
-      </div>
+      <div class="row separator">
+        <div class="col s12 center">
+          <button class="social-auth" style="margin-right: 30px;" (click)="submitGoogleSocialAuth()">
+            <img class="responsive-img" src="/assets/images/google-icon.png" alt="google-icon">
+          </button>
 
-      <div class="row">
-        <div class="col s12">
-          <button (click)="submitFacebookSocialAuth()" class="btn-stroked center"> Facebook </button>
+          <button class="social-auth" (click)="submitFacebookSocialAuth()">
+            <img class="responsive-img" src="/assets/images/facebook-icon.png" alt="google-icon">
+          </button>
         </div>
       </div>
-    
-      <div class="row" style="margin-top: 2em;">
+      
+      <!-- Login option -->
+      <div class="row separator">
         <div class="col s12 center">
           <p class="redirect-to-singup-label"> Ya tienes una cuenta? &nbsp; 
             <a class="redirect-to-singup-btn" [routerLink]="['/authentication/singin']"> Inicia sesión </a> 
