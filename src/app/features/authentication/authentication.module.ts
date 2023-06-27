@@ -4,6 +4,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 // Modules
 import { AuthenticationRoutingModule } from './authentication-routing.module';
+import { AppComponentsModule } from 'src/app/core/app-components/app-components.module';
+
 
 // Components
 import { SingUpComponent } from './sing-up/sing-up.component';
@@ -15,6 +17,7 @@ import { SingInComponent } from './sing-in/sing-in.component';
     SingInComponent
   ],
   imports: [
+    AppComponentsModule,
     CommonModule,
     FormsModule,
     ReactiveFormsModule,

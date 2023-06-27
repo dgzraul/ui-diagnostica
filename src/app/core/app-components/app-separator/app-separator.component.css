@@ -1,0 +1,17 @@
+.separator {
+  display: flex;
+  align-items: center;
+  
+  margin-left: 20%;
+  margin-right: 20%;
+}
+
+.separator-line {
+  flex-grow: 1;
+  border: none;
+  border-top: 1px solid #a5a9b166;
+}
+
+.separator-text {
+  padding: 15px 15px;
+}

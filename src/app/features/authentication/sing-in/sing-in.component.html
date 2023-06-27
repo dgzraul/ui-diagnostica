@@ -1,86 +1,101 @@
-<section>
-  <div class="row">
-    <div class="col s12 m6">
-      <!-- Header -->
-      <div class="row">
-        <div class="col s12">
-          <p class="login-title"> Bienvenido! </p>
-          <p class="login-subtitle" style="margin-top: 5px;"> Gestión médica ágil y efectiva. Accede o regístrate para comenzar. </p>
-        </div>
-      </div>
-      
-      <!-- Login form -->
-      <form [formGroup]="form" (ngSubmit)="submit($event)" style="margin-top: 3em;">
-        <!-- Email -->
+<ng-container>
+  <section class="main">
+    <div class="row valign-wrapper">
+      <section class="col s0 m0 l6 hide-on-small-only section-logo center">
+        <img class="home-logo" src="/assets/images/home-logo.png" alt="home-logo">
+      </section>
+    
+      <section class="col s12 m12 l6 section-form">
         <div class="row">
-          <div class="col s12 input-container">
-            <label for="email"> Correo electrónico </label>
-            <input type="email" name="email" id="email" formControlName="email" class="browser-default"
-              [class.input-invalid]="IOEmail?.dirty && IOEmail?.invalid">
+          <div class="col s12 m12 l6 offset-l3">
+            <!-- Header -->
+            <div class="row">
+              <div class="col s12">
+                <h1 class="login-title"> Bienvenido! </h1>
+              </div>
+              <div class="col s12">
+                <h2 class="login-subtitle" style="margin-top: 5px;"> Gestión médica ágil y efectiva. Accede o regístrate para comenzar. </h2>
+              </div>
+            </div>
+            
+            <!-- Login form -->
+            <form [formGroup]="form" (ngSubmit)="submit($event)" style="margin-top: 3em;">
+              <!-- Email -->
+              <div class="row">
+                <div class="col s12 input-container">
+                  <label for="email"> Correo electrónico </label>
+                  <input type="email" name="email" id="email" formControlName="email" class="browser-default"
+                    [class.input-invalid]="IOEmail?.dirty && IOEmail?.invalid">
+                
+                  <ng-container *ngIf="IOEmail?.dirty">
+                    <span *ngIf="IOEmail?.hasError('required')"> Este campo es obligatorio </span>
+                    <span *ngIf="IOEmail?.hasError('invalidEmail')"> Correo con formato invalido </span>
+                  </ng-container>	
+                </div>
+              </div>
           
-            <ng-container *ngIf="IOEmail?.dirty">
-              <span *ngIf="IOEmail?.hasError('required')"> Este campo es obligatorio </span>
-              <span *ngIf="IOEmail?.hasError('invalidEmail')"> Correo con formato invalido </span>
-            </ng-container>	
-          </div>
-        </div>
-    
-        <!-- Password -->
-        <div class="row">
-          <div class="col s12 input-container">
-            <label for="password"> Contraseña </label>
-            <input [type]="IOPasswordType ? 'text' : 'password'" name="password" id="password" formControlName="password" class="browser-default"
-              [class.input-invalid]="IOPassword?.dirty && IOPassword?.invalid">
-    
-            <i class="material-icons field-action-icon" (click)="togglePasswordType()"> {{ IOPasswordType ? 'visibility' : 'visibility_off'}} </i>
+              <!-- Password -->
+              <div class="row">
+                <div class="col s12 input-container">
+                  <label for="password"> Contraseña </label>
+                  <input [type]="IOPasswordType ? 'text' : 'password'" name="password" id="password" formControlName="password" class="browser-default"
+                    [class.input-invalid]="IOPassword?.dirty && IOPassword?.invalid">
           
-            <ng-container *ngIf="IOPassword?.dirty">
-              <span *ngIf="IOPassword?.hasError('required')"> Este campo es obligatorio </span>
-            </ng-container>	
-          </div>        
-        </div>
+                  <i class="material-icons field-action-icon" (click)="togglePasswordType()"> {{ IOPasswordType ? 'visibility' : 'visibility_off'}} </i>
+                
+                  <ng-container *ngIf="IOPassword?.dirty">
+                    <span *ngIf="IOPassword?.hasError('required')"> Este campo es obligatorio </span>
+                  </ng-container>	
+                </div>        
+              </div>
+          
+              <!-- Recovery password -->
+              <div class="row">
+                <div class="col s12">
+                  <a class="login-recovery-password right" (click)="sendPasswordResetEmail()"> Recuperar contraseña </a>
+                </div>
+              </div>
+          
+              <!-- Submit -->
+              <div class="row separator">
+                <div class="col s12">
+                  <button class="primary-btn" type="submit" [disabled]="form.invalid"> Iniciar sesión </button>
+                </div>
+              </div>
+            </form>
     
-        <!-- Recovery password -->
-        <div class="row">
-          <div class="col s12">
-            <a class="login-recovery-password right" (click)="sendPasswordResetEmail()"> Recuperar contraseña </a>
+            <!-- Separator -->
+            <div class="row separator">
+              <div class="col s12 center">
+                <app-separator> También puedes usar </app-separator>
+              </div>
+            </div>
+    
+          
+            <!-- Social buttons -->
+            <div class="row separator">
+              <div class="col s12 center">
+                <button class="social-auth" style="margin-right: 30px;" (click)="submitGoogleSocialAuth()">
+                  <img class="responsive-img" src="/assets/images/google-icon.png" alt="google-icon">
+                </button>
+    
+                <button class="social-auth" (click)="submitFacebookSocialAuth()">
+                  <img class="responsive-img" src="/assets/images/facebook-icon.png" alt="google-icon">
+                </button>
+              </div>
+            </div>
+            
+            <!-- Singup option -->
+            <div class="row separator">
+              <div class="col s12 center">
+                <p class="redirect-to-singup-label"> Aún no tienes una cuenta? &nbsp; 
+                  <a class="redirect-to-singup-btn" [routerLink]="['/authentication/singup']"> Registrate </a> 
+                </p>
+              </div>
+            </div>
           </div>
         </div>
-    
-        <!-- Submit -->
-        <div class="row" style="margin-top: 2em">
-          <div class="col s12">
-            <button class="login-submit-button" type="submit" [disabled]="form.invalid"> Iniciar sesión </button>
-          </div>
-        </div>
-      </form>
-    
-      <div class="row" style="margin-top: 2em;">
-        <div class="col s12 center">
-          <p class="login-divisor"> También puedes usar </p>
-        </div>
-      </div>
-    
-      <!-- Social buttons -->
-      <div class="row" style="margin-top: 2em;">
-        <div class="col s12">
-          <button (click)="submitGoogleSocialAuth()" class="btn-stroked center"> Google </button>
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="col s12">
-          <button (click)="submitFacebookSocialAuth()" class="btn-stroked center"> Facebook </button>
-        </div>
-      </div>
-    
-      <div class="row" style="margin-top: 2em;">
-        <div class="col s12 center">
-          <p class="redirect-to-singup-label"> Aún no tienes una cuenta? &nbsp; 
-            <a class="redirect-to-singup-btn" [routerLink]="['/authentication/singup']"> Registrate </a> 
-          </p>
-        </div>
-      </div>
+      </section>  
     </div>
-  </div>  
-</section>
+  </section>
+</ng-container>

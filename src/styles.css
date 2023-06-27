@@ -1,21 +1,15 @@
 @import url('./assets/fonts/plusJakartaSans.css');
-@import url('./assets/fonts/manrope.css');
-@import url('./assets/fonts/DMSans.css');
-@import url('./assets/fonts/lato.css');
 @import url('./assets//styles/typography.css');
+@import url('./assets/styles/buttons.css');
 @import url('./assets/styles/form.css');
 
 html,
 body {
-  height: 100vh;
   background-color: #ffffff;
 }
 
 body {
   font-family: 'Plus Jakarta Sans', sans-serif;
-  /* font-family: 'Manrope', sans-serif; */
-  /* font-family: 'DM Sans', sans-serif; */
-  /* font-family: 'Lato', sans-serif; */
   margin: 0;
 }
 
@@ -28,23 +22,6 @@ footer {
 /* Icons */
 .material-icons {
   color: grey;
-}
-
-/* Buttons */
-button {
-  padding-top: 14px;
-  padding-bottom: 14px;
-  border-radius: 25px;
-  font-size: 15px;
-}
-
-.btn-stroked {
-  background-color: white;
-  color: black;
-  border: 1px solid #a5a9b1;
-  font-size: 15px;
-  cursor: pointer;
-  width: 100% !important;
 }
 
 /* Materialize Mobile */
