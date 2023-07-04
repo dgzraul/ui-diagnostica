@@ -3,7 +3,7 @@ import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest
 import { Observable, catchError, from, switchMap } from 'rxjs';
 
 // Services
-import { AuthenticationService } from 'src/app/features/authentication/authentication.service';
+import { AuthenticationService } from 'src/app/core/services/authentication.service';
 
 @Injectable()
 export class AuthInterceptorService implements HttpInterceptor {

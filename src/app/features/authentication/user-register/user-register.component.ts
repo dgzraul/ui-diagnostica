@@ -3,8 +3,10 @@ import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/fo
 import { Router } from '@angular/router';
 
 // Services
-import { AuthenticationService } from '../../authentication/authentication.service';
-import { UsersService } from '../users.service';
+import { AuthenticationService } from 'src/app/core/services/authentication.service';
+import { UsersService } from 'src/app/core/services/users.service';
+
+// Utils
 import { dateValidator } from 'src/app/core/validators/date.validator';
 
 @Component({
@@ -38,7 +40,7 @@ export class UserRegisterComponent {
     data.birthday = this.stringToDate(this.form.get('birthday')?.value);
     this.usersService.createProfile(data).subscribe({
       next: () => {
-        this.router.navigate(['/office/default_register']);
+        this.router.navigate(['/authentication/create_default_office']);
       }
     });
   }

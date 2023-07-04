@@ -3,10 +3,12 @@ import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/fo
 import { Router } from '@angular/router';
 
 // Services
-import { AuthenticationService } from '../authentication.service';
+import { AuthenticationService } from 'src/app/core/services/authentication.service';
 
 // Validators
 import { emailValidator } from 'src/app/core/validators';
+import { from } from 'rxjs';
+import { UsersService } from '../../users/users.service';
 
 @Component({
   selector: 'app-sing-in',
@@ -18,6 +20,7 @@ export class SingInComponent {
   public IOPasswordType: boolean = false; 
 
   constructor(
+    private usersService: UsersService,
     private service: AuthenticationService,
     private formBuilder: FormBuilder,
     private router: Router
@@ -37,7 +40,7 @@ export class SingInComponent {
     
     try {
       await this.service.signInWithEmailAndPassword(this.IOEmail!.value, this.IOPassword!.value);  
-      this.router.navigate(['']);
+      this.getDiagnosticaAccount();
     } catch (error: any) {
       M.toast({html: error});
     }
@@ -77,6 +80,29 @@ export class SingInComponent {
     } catch (error: any) {
       M.toast({html: error});
     }
+  }
+
+  public getDiagnosticaAccount(): void {
+    // Verify perfil status
+    from(this.service.firebaseAccount!.getIdToken()).subscribe({
+      next: (token) => {        
+        // Find profile
+        this.usersService.profile({token: token}).subscribe({
+          next: (profile) => {                       
+            this.service.setSystemAccount(profile);
+            if(profile == null)  {
+              this.router.navigate(['/authentication/create_profile']);          
+            } else {
+              if(profile.offices.length <= 0) {                
+                this.router.navigate(['/authentication/create_default_office']);
+              } else {
+                this.router.navigate(['']);
+              }
+            }
+          }
+        });            
+      }
+    });
   }
 
   // Form getters

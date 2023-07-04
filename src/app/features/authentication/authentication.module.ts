@@ -10,11 +10,15 @@ import { AppComponentsModule } from 'src/app/core/app-components/app-components.
 // Components
 import { SingUpComponent } from './sing-up/sing-up.component';
 import { SingInComponent } from './sing-in/sing-in.component';
+import { UserRegisterComponent } from './user-register/user-register.component';
+import { OfficeDefaultRegisterComponent } from './office-default-register/office-default-register.component';
 
 @NgModule({
   declarations: [
     SingUpComponent,
-    SingInComponent
+    SingInComponent,
+    UserRegisterComponent,
+    OfficeDefaultRegisterComponent
   ],
   imports: [
     AppComponentsModule,

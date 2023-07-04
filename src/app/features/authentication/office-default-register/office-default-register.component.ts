@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 
 // Services
 import { SpecialitiesService } from '../../specialities/specialities.service';
-import { OfficesService } from '../offices.service';
+import { OfficesService } from 'src/app/core/services/offices.service';
 
 @Component({
   selector: 'app-office-default-register',

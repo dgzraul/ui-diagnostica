@@ -6,14 +6,24 @@ import { BehaviorSubject, Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class AuthenticationService { 
-  private onFirebaseAccountStateChangeSubject: BehaviorSubject<User | null>;
-  public onFirebaseAccountStateChange$: Observable<User | null>;
+  private readonly _systemAccountStorageKey: string = "urbanteamUser";
+
+  private _firebaseAccountSubject: BehaviorSubject<User | null>;
+  public readonly firebaseAccount$: Observable<User | null>;
+
+  private _systemAccountSubject: BehaviorSubject<any | null>;
+  public readonly systemAccount$: Observable<any | null>;
 
   constructor(
     private auth: Auth
-  ) { 
-    this.onFirebaseAccountStateChangeSubject = new BehaviorSubject<User | null>(this.auth.currentUser);
-    this.onFirebaseAccountStateChange$ = this.onFirebaseAccountStateChangeSubject.asObservable();
+  ) {     
+    console.log(this.auth.currentUser);
+    
+    this._firebaseAccountSubject = new BehaviorSubject<User | null>(this.auth.currentUser);
+    this.firebaseAccount$ = this._firebaseAccountSubject.asObservable();
+
+    this._systemAccountSubject = new BehaviorSubject<any | null>(null);
+    this.systemAccount$ = this._systemAccountSubject.asObservable();
   }
 
   /**
@@ -216,13 +226,50 @@ export class AuthenticationService {
   }
 
   /**
+   * Usuario de firebase (en sesión)
+   */
+  public get getFirebaseAccount(): User | null {
+    return this._firebaseAccountSubject.value;
+  }
+
+  /**
+   * Almacenamiento de usuario de firebase (en sesión)
+   */
+   public setFirebaseAccount(firebaseUser: User | null): void {
+    this._firebaseAccountSubject.next(firebaseUser);      
+  }
+
+  /**
+   * System account (on session)
+   */
+  public get getSystemAccount(): any | null {
+    return this._systemAccountSubject.value;
+  }
+
+  /**
+   * Save system account (on local storage)
+   */
+  public setSystemAccount(systemUser: any | null): void {
+    console.log(systemUser);
+    
+    if(systemUser == null) {
+      localStorage.removeItem(this._systemAccountStorageKey);
+      this._systemAccountSubject.next(systemUser); 
+    } else {
+      localStorage.setItem(this._systemAccountStorageKey, JSON.stringify(systemUser));
+      this._systemAccountSubject.next(systemUser); 
+    }
+  }
+
+  /**
    * Close current sessión (firebase)
    * @returns 
    */
   public logout(): Observable<void> {
     return new Observable<void>((subscriber) => {
       signOut(this.auth).then(() => {
-        this.onFirebaseAccountStateChangeSubject.next(null);
+        this._firebaseAccountSubject.next(null);
+        this._systemAccountSubject.next(null);
         subscriber.next();
         subscriber.complete();
       });

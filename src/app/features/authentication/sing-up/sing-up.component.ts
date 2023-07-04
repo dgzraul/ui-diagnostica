@@ -3,7 +3,7 @@ import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/fo
 import { Router } from '@angular/router';
 
 // Services
-import { AuthenticationService } from '../authentication.service';
+import { AuthenticationService } from 'src/app/core/services/authentication.service';
 
 // Validators
 import { passwordValidator, passwordMatchValidator, emailValidator } from 'src/app/core/validators';

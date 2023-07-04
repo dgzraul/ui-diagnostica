@@ -1,11 +1,31 @@
 <ng-container>
-  <button (click)="logout()"> logout </button>
+  <header>  
+    <ul id="slide-out" class="sidenav sidenav-fixed">
+      <li><div class="user-view">
+        <a><img class="circle" src="/assets/images/logo.png"></a>
+        <a><span class="name">John Doe</span></a>
+        <a><span class="email">jdandturk@gmail.com</span></a>
+      </div></li>
 
-  <ng-container *ngIf="!findProfileLoading; else LoadingSection">
-    <router-outlet></router-outlet>  
-  </ng-container>
+      <li><a class="subheader"> Menú </a></li>
 
-  <ng-template #LoadingSection>
-    <p> LOADING ... </p>
-  </ng-template>
+      <li><a class="waves-effect" (click)="logout()"> <i class="material-icons">logout</i> Cerrar sesión </a></li>
+
+      <li><a style="cursor: default; font-size: 10px; color: rgb(160, 160, 160);"> WEB APP VERSION - {{ projectVersion }} </a></li>
+    </ul>
+  </header> 
+
+  <main>  
+    <ng-container *ngIf="!findProfileLoading; else LoadingSection">
+      <router-outlet></router-outlet>  
+    </ng-container>
+  
+    <ng-template #LoadingSection>
+      <p> LOADING ... </p>
+    </ng-template>
+  </main>
+
+  <footer>
+
+  </footer>
 </ng-container>
