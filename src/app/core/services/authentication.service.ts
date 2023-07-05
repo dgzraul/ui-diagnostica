@@ -16,9 +16,7 @@ export class AuthenticationService {
 
   constructor(
     private auth: Auth
-  ) {     
-    console.log(this.auth.currentUser);
-    
+  ) {             
     this._firebaseAccountSubject = new BehaviorSubject<User | null>(this.auth.currentUser);
     this.firebaseAccount$ = this._firebaseAccountSubject.asObservable();
 
@@ -72,7 +70,7 @@ export class AuthenticationService {
   public createUserWithEmailAndPassword(email: string, password: string): Promise<UserCredential> {
     return new Promise(async (resolve, reject) => {
       try {
-        const credential = await createUserWithEmailAndPassword(this.auth, email, password);
+        const credential = await createUserWithEmailAndPassword(this.auth, email, password);      
         return resolve(credential);
       } catch (error: any) {
         switch(error.code) {
@@ -226,14 +224,14 @@ export class AuthenticationService {
   }
 
   /**
-   * Usuario de firebase (en sesión)
+   * Firebase user (on sesión)
    */
   public get getFirebaseAccount(): User | null {
     return this._firebaseAccountSubject.value;
   }
 
   /**
-   * Almacenamiento de usuario de firebase (en sesión)
+   * Save firebase user (on sesión)
    */
    public setFirebaseAccount(firebaseUser: User | null): void {
     this._firebaseAccountSubject.next(firebaseUser);      
@@ -249,9 +247,7 @@ export class AuthenticationService {
   /**
    * Save system account (on local storage)
    */
-  public setSystemAccount(systemUser: any | null): void {
-    console.log(systemUser);
-    
+  public setSystemAccount(systemUser: any | null): void {    
     if(systemUser == null) {
       localStorage.removeItem(this._systemAccountStorageKey);
       this._systemAccountSubject.next(systemUser); 

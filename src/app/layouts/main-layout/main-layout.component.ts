@@ -18,9 +18,14 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./main-layout.component.css']
 })
 export class MainLayoutComponent {
-  projectVersion: string = environment.version;
-  sidenav: any;
+  // private sidenav: any;
+  // variables
+  public projectVersion: string = environment.version;
+  public user: any | null; 
+
+  // loaders
   public findProfileLoading: boolean = true; 
+  public createProfileLoading: boolean = false; 
 
   constructor(
     private usersService: UsersService,
@@ -31,13 +36,23 @@ export class MainLayoutComponent {
 
     // Get token
     from(this.authenticationService.firebaseAccount!.getIdToken()).subscribe({
-      next: (token) => {        
+      next: (token) => {    
+
         // Find profile
         this.usersService.profile({token: token}).subscribe({
-          next: (profile) => {   
-            if(profile == null || profile.offices.length <= 0) {
-              this.logout();
-            }
+          next: (user: any) => {   
+            if(user) {              
+              this.user = user; 
+            } else {
+              this.createProfileLoading = true;
+                            
+              // save profile
+              this.createProfile({
+                firebaseUID: this.authenticationService.getFirebaseAccount!.uid, 
+                email: this.authenticationService.getFirebaseAccount!.email
+              });
+
+            }            
           },
           error: (error) => {
             this.findProfileLoading = false;
@@ -45,6 +60,7 @@ export class MainLayoutComponent {
           complete: () => {
             this.findProfileLoading = false;
           }
+
         });            
       }
     });
@@ -56,6 +72,24 @@ export class MainLayoutComponent {
       }      
     });
   }
+
+  /**
+   * @description save profile
+   * @param data 
+   */
+  private createProfile(data: any): any {
+    this.usersService.createProfile(data).subscribe({
+      next: (user: any) => {   
+        this.user = user; 
+      },
+      error: (error) => {
+        this.createProfileLoading = false; 
+      },
+      complete: () => {
+        this.createProfileLoading = false; 
+      }
+    });
+  } 
 
   logout() {
     this.authenticationService.logout().subscribe(() => {});

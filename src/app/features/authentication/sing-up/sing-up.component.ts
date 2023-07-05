@@ -37,7 +37,8 @@ export class SingUpComponent {
     $event.preventDefault(); 
     
     try {
-      await this.service.createUserWithEmailAndPassword(this.IOEmail!.value, this.IOPassword!.value);  
+      let credential = await this.service.createUserWithEmailAndPassword(this.IOEmail!.value, this.IOPassword!.value);  
+      this.service.setFirebaseAccount(credential.user);
       this.router.navigate(['']);
     } catch (error: any) {
       M.toast({html: error});
