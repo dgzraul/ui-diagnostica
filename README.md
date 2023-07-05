@@ -2,7 +2,7 @@
 **version de proyecto**: v0.0.0.1
 **Angular CLI**: 16.0.0
 **Angular**: 16.0.0
-**Node**: 18.16.0
+**Node**: 16.20.0
 ___
 
 ## Proceso de incio

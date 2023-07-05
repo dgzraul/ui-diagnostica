@@ -4,9 +4,14 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 // Modules
 import { UsersRoutingModule } from './users-routing.module';
+import { UpdateUserComponent } from './update-user/update-user.component';
+import { DetailUserComponent } from './detail-user/detail-user.component';
 
 @NgModule({
-  declarations: [],
+  declarations: [
+    UpdateUserComponent,
+    DetailUserComponent
+  ],
   imports: [
     CommonModule,
     ReactiveFormsModule,

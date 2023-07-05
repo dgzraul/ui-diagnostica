@@ -15,7 +15,7 @@ export class UsersService {
     return this.http.post<any>(`${this.api}/profile`, data);
   }
 
-  verifyRegister(firebaseUID: string): Observable<any> {
+  verifyRegistersss(firebaseUID: string): Observable<any> {
     return this.http.get<any>(`${this.api}/verify_firebase_account`, {params: {firebaseUID: firebaseUID}});
   }
 
