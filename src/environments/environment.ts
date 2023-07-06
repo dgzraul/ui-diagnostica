@@ -2,7 +2,7 @@ export const environment = {
   production: false,
   version: 'DEV-0.0.0.1',
   webservice: {
-    diagnostica: 'http://192.168.1.101:1336/api/v1'
+    diagnostica: 'http://localhost:1336/api/v1'
   },
   firebase: {
     projectId: 'diagnostica-dev',

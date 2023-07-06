@@ -38,7 +38,7 @@ export class UserRegisterComponent {
     $event.preventDefault(); 
     let data = this.form.value;
     data.birthday = this.stringToDate(this.form.get('birthday')?.value);
-    this.usersService.createProfile(data).subscribe({
+    this.usersService.create(data).subscribe({
       next: () => {
         this.router.navigate(['/authentication/create_default_office']);
       }

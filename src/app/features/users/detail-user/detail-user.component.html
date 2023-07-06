@@ -1,1 +1,20 @@
-<p>detail-user works!</p>
+<ng-container *ngIf="!findProfileLoader; else LoadingSection">
+  <div class="row">
+    <div class="col s12">
+      <p> <strong> Correo electrónico: </strong> {{ user.email }} </p>
+      <p> <strong> Nombre: </strong> {{ user.name }} {{ user.lastname }} {{ user.secondLastname }} </p>
+      <p> <strong> Fecha de nacimiento: </strong> {{ user.birthday }} </p>
+      <p> <strong> CURP: </strong> {{ user.CURP }} </p>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col s12">
+      <a [routerLink]="['/user/update', user._id]"> Editar </a>
+    </div>
+  </div>
+</ng-container>
+
+<ng-template #LoadingSection>
+  <p> LOADING ... </p>
+</ng-template>

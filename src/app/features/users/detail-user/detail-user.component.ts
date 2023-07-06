@@ -13,6 +13,7 @@ export class DetailUserComponent {
   public user: any | null; 
 
   // loaders
+  public findProfileLoader: boolean = true; 
 
   constructor(
     private authenticationService: AuthenticationService,
@@ -26,6 +27,9 @@ export class DetailUserComponent {
         this.usersService.profile({token: token}).subscribe({
           next: (user) => {
             this.user = user; 
+          },
+          complete: () => {
+            this.findProfileLoader = false; 
           }
         });
       }

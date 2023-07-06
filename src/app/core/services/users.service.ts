@@ -21,7 +21,11 @@ export class UsersService {
     return this.http.get<any>(`${this.api}/verify_firebase_account`, {params: {firebaseUID: firebaseUID}});
   }
 
-  createProfile(data: any): Observable<any> {
+  create(data: any): Observable<any> {
     return this.http.post<any>(`${this.api}`, data);
+  }
+
+  update(id: string, data: any): Observable<any> {
+    return this.http.put<any>(`${this.api}/${id}`, data);
   }
 }

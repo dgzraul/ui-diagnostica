@@ -15,8 +15,8 @@ export class UsersService {
     return this.http.post<any>(`${this.api}/profile`, data);
   }
 
-  createProfile(data: any): Observable<any> {
-    return this.http.post<any>(`${this.api}/create_profile`, data);
+  create(data: any): Observable<any> {
+    return this.http.post<any>(`${this.api}`, data);
   }
 
   update(data: any): Observable<any> {

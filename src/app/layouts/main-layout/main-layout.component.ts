@@ -78,7 +78,7 @@ export class MainLayoutComponent {
    * @param data 
    */
   private createProfile(data: any): any {
-    this.usersService.createProfile(data).subscribe({
+    this.usersService.create(data).subscribe({
       next: (user: any) => {   
         this.user = user; 
       },
