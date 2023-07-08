@@ -8,8 +8,9 @@
       </div></li>
 
       <li><a class="subheader"> Menú </a></li>
-      <li><a class="waves-effect"> <i class="material-icons">calendar_month</i> Mi agenda </a></li>
-      <li><a class="waves-effect"> <i class="material-icons">home_health</i> Mis consultorios </a></li>
+      <li><a class="waves-effect" [routerLink]="['/patient']"> <i class="material-icons">group</i> Pacientes </a></li>
+      <li><a class="waves-effect" [routerLink]="['/schedule/overview']"> <i class="material-icons">calendar_month</i> Mi agenda </a></li>
+      <li><a class="waves-effect" [routerLink]="['/office']"> <i class="material-icons">home_health</i> Mis consultorios </a></li>
       <li><a class="waves-effect" [routerLink]="['/user/profile']"> <i class="material-icons">account_circle</i> Mi perfil </a></li>
 
       <li><div class="divider"></div></li>

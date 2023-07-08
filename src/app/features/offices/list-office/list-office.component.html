@@ -1,1 +1,25 @@
-<p>list-office works!</p>
+<ng-container *ngIf="!findOfficesLoader; else LoadingSection">
+  <div class="row" *ngFor="let office of offices">
+    <div class="col s12" >
+      <p> {{ office.name }} </p>
+    </div>
+
+    <div class="col s12" *ngFor="let speciality of office.specialities">
+      <p> {{ speciality.name }} </p>
+    </div>
+
+    <div class="col s12">
+      <a [routerLink]="['/office/update', office._id]"> Editar </a>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col s12">
+      <a [routerLink]="['/office/create']"> Agregar consultorio </a>
+    </div>
+  </div>
+</ng-container>
+
+<ng-template #LoadingSection>
+  <p> LOADING ... </p>
+</ng-template>

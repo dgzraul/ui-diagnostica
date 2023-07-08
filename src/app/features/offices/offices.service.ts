@@ -13,7 +13,11 @@ export class OfficesService {
 
   constructor(private http: HttpClient) { }
 
-  createDefault(payload: any): Observable<any> {
-    return this.http.post<any>(`${this.api}/create_default`, payload);
+  findByUserFromToken(): Observable<any> {
+    return this.http.get<any>(`${this.api}/user`);
+  }
+
+  createToUserFromToken(payload: any): Observable<any> {
+    return this.http.post<any>(`${this.api}/user`, payload);
   }
 }

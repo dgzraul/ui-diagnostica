@@ -6,11 +6,13 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { OfficesRoutingModule } from './offices-routing.module';
 import { ListOfficeComponent } from './list-office/list-office.component';
 import { UpdateOfficeComponent } from './update-office/update-office.component';
+import { CreateOfficeComponent } from './create-office/create-office.component';
 
 @NgModule({
   declarations: [
     ListOfficeComponent,
-    UpdateOfficeComponent
+    UpdateOfficeComponent,
+    CreateOfficeComponent
   ],
   imports: [
     CommonModule,

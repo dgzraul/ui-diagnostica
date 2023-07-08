@@ -1,0 +1,17 @@
+<div class="header">
+  <button (click)="goToPreviousMonth()">Previous</button>
+  <h2>{{ currentDate.monthLong }} {{ currentDate.year }}</h2>
+  <button (click)="goToNextMonth()">Next</button>
+</div>
+
+<div class="days">
+  <div class="day" *ngFor="let day of monthDays" (click)="selectDate(day)">
+    {{ day }}
+  </div>
+</div>
+
+<div class="hours" *ngIf="selectedDate">
+  <div class="hour" *ngFor="let hour of hours" (click)="selectHour(hour)">
+    {{ hour.hour.toString().padStart(2, '0') }}:00
+  </div>
+</div>

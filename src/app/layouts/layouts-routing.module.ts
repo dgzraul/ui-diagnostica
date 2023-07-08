@@ -25,6 +25,7 @@ const routes: Routes = [
       { path: 'user', loadChildren: () => import('../features/users/users.module').then(m => m.UsersModule) },
       { path: 'office', loadChildren: () => import('../features/offices/offices.module').then(m => m.OfficesModule) },
       { path: 'patient', loadChildren: () => import('../features/patients/patients.module').then(m => m.PatientsModule) },
+      { path: 'schedule', loadChildren: () => import('../features/schedule/schedule.module').then(m => m.ScheduleModule) }
       // { path: '**', redirectTo: 'user' }
     ]
   },
