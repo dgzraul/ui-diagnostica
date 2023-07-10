@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { ScheduleRoutingModule } from './schedule-routing.module';
 import { OverviewScheduleComponent } from './overview-schedule/overview-schedule.component';
+import { AppComponentsModule } from 'src/app/core/app-components/app-components.module';
 
 
 @NgModule({
@@ -11,6 +12,7 @@ import { OverviewScheduleComponent } from './overview-schedule/overview-schedule
   ],
   imports: [
     CommonModule,
+    AppComponentsModule,
     ScheduleRoutingModule
   ]
 })

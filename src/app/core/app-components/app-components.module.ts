@@ -3,16 +3,19 @@ import { CommonModule } from '@angular/common';
 
 // Components
 import { AppSeparatorComponent } from './app-separator/app-separator.component';
+import { AppCalendarComponent } from './app-calendar/app-calendar.component';
 
 @NgModule({
   declarations: [
-    AppSeparatorComponent
+    AppSeparatorComponent,
+    AppCalendarComponent
   ],
   imports: [
     CommonModule
   ],
   exports: [
-    AppSeparatorComponent
+    AppSeparatorComponent,
+    AppCalendarComponent
   ]
 })
 export class AppComponentsModule { }

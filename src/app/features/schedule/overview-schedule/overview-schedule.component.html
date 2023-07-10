@@ -1,17 +1,28 @@
-<div class="header">
-  <button (click)="goToPreviousMonth()">Previous</button>
-  <h2>{{ currentDate.monthLong }} {{ currentDate.year }}</h2>
-  <button (click)="goToNextMonth()">Next</button>
-</div>
+<div>  
+  <!-- Calendar -->
+  <div class="row">
+    <div class="col s12 m6">
+      <div class="row" *ngIf="selectedDate">
+        <div class="col s12">
+          <p>Selected Date and Time: {{ selectedDate.toFormat('EEEE yyyy hh:mm a') }}</p>
+        </div>
+      </div>
+      
+      <div class="row" *ngIf="selectedDate">
+        <div class="col s12">
+          <ul class="collection">
+            <li *ngFor="let hour of hours" class="collection-item" (click)="selectHour(hour)" [class.active]="selectedDateTime && selectedDateTime.toFormat('yyyy-MM-dd hh:mm a') === selectedDate.toFormat('yyyy-MM-dd') + ' ' + hour">
+              {{ hour }}
+            </li>
+            
+          </ul>
+        </div>
+      </div>
+    </div>
 
-<div class="days">
-  <div class="day" *ngFor="let day of monthDays" (click)="selectDate(day)">
-    {{ day }}
-  </div>
-</div>
 
-<div class="hours" *ngIf="selectedDate">
-  <div class="hour" *ngFor="let hour of hours" (click)="selectHour(hour)">
-    {{ hour.hour.toString().padStart(2, '0') }}:00
-  </div>
+    <div class="col s12 m6">
+      <app-calendar (selectedDateChange)="selectDateChange($event)"> </app-calendar>
+    </div>
+  </div>  
 </div>

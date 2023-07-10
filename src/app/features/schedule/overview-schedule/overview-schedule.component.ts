@@ -1,71 +1,45 @@
 import { Component } from '@angular/core';
 import { DateTime } from 'luxon';
 
-interface Hour {
-  date: DateTime;
-  hour: any;
-}
+// interface Hour {
+//   date: DateTime;
+//   hour: any;
+// }
 
 @Component({
   selector: 'app-overview-schedule',
   templateUrl: './overview-schedule.component.html',
   styleUrls: ['./overview-schedule.component.css']
 })
-export class OverviewScheduleComponent {
-  currentDate: DateTime;
-  monthDays: number[] = [];
-  selectedMonth: number;
-  selectedYear: number;
-  selectedDate: DateTime | null = null;
-  hours: Hour[] = [];
+export class OverviewScheduleComponent {  
+  selectedDate: DateTime | null = null; 
 
-  constructor() {
-    this.currentDate = DateTime.now();
-    this.selectedMonth = this.currentDate.month;
-    this.selectedYear = this.currentDate.year;
-    this.updateMonthDays();
-  }
+  hours: string[] = [];
+  selectedDateTime: DateTime | null = null;  
+  selectedDay: number | null = null; 
 
-  updateMonthDays() {
-    const daysInMonth = this.currentDate.daysInMonth;
-    this.monthDays = Array.from(Array(daysInMonth), (_, i) => i + 1);
-  }
-
-  goToPreviousMonth() {
-    this.currentDate = this.currentDate.minus({ months: 1 });
-    this.selectedMonth = this.currentDate.month;
-    this.selectedYear = this.currentDate.year;
-    this.updateMonthDays();
-  }
-
-  goToNextMonth() {
-    this.currentDate = this.currentDate.plus({ months: 1 });
-    this.selectedMonth = this.currentDate.month;
-    this.selectedYear = this.currentDate.year;
-    this.updateMonthDays();
-  }
-
-  selectDate(day: number) {
-    this.selectedDate = this.currentDate.set({ day });
-    console.log(this.selectedDate.toLocaleString());
-    this.generateHours();
-  }
+  constructor() { }  
 
   generateHours() {
     this.hours = [];
-    for (let hour = 0; hour < 24; hour++) {
-      const dateWithHour = this.selectedDate!.set({ hour });
-      this.hours.push({ date: dateWithHour, hour });
+    for (let hour = 0; hour < 12; hour++) {
+      this.hours.push(`${hour === 0 ? 12 : hour.toString()}:00 am`);
+    }
+    for (let hour = 12; hour < 24; hour++) {
+      this.hours.push(`${(hour === 12 ? 12 : hour - 12).toString()}:00 pm`);
     }
   }
-
-  selectHour(selectedHour: Hour) {
-    const utcDateTime = selectedHour.date.toUTC();
-    const mexicoCityDateTime = utcDateTime.setZone('America/Mexico_City');
   
-    const formattedUTC = utcDateTime.toFormat('yyyy-MM-dd HH:mm:ss ZZZZ');
-    const formattedMexicoCity = mexicoCityDateTime.toFormat('yyyy-MM-dd HH:mm:ss ZZZZ');
-  
-    alert(`Selected date and time in UTC: ${formattedUTC}\nSelected date and time in America/Mexico_City: ${formattedMexicoCity}`);
+  selectHour(selectedHour: string) {
+    // XX const [hourString] = selectedHour.split(':');
+    // XX const hour = parseInt(hourString) % 12; // Obtener la hora en formato de 24 horas
+    // const selectedDateTime = this.selectedDateTime.set({ hour, minute: 0 });
+    // this.selectedDateTime = selectedDateTime;
+    // XX this.selectedDateTime = this.selectedDate.set({hour, minute: 0});
   }
+
+  selectDateChange(date: DateTime): void {
+    this.selectedDate = date; 
+    this.generateHours();
+  }  
 }

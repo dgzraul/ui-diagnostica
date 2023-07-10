@@ -1,0 +1,36 @@
+<ng-container>
+  <!-- Calendar controls -->
+  <div class="row valign-wrapper">
+    <div class="col s1 left-align" style="padding-left: .75rem;">
+      <a class="calendar-btn" (click)="goToPreviousMonth()"><i class="material-icons">chevron_left</i></a>
+    </div>
+
+    <div class="col s10 center">
+      <h4 class="month-title"> {{ selectedDate.setLocale('es').toFormat('MMMM') }} </h4>
+      <h6 class="year-title"> {{ selectedDate.setLocale('es').toFormat('yyyy') }} </h6>
+    </div>
+
+    <div class="col s1 right-align" style="padding-right: .75rem;">
+      <a class="calendar-btn" (click)="goToNextMonth()"><i class="material-icons">chevron_right</i></a>
+    </div>
+  </div>
+
+  <!-- Calendar -->
+  <div class="calendar">
+    <div class="header">
+      <div class="day">Domingo</div>
+      <div class="day">Lunes</div>
+      <div class="day">Martes</div>
+      <div class="day">Miércoles</div>
+      <div class="day">Jueves</div>
+      <div class="day">Viernes</div>
+      <div class="day">Sábado</div>
+    </div>
+
+    <div class="days">          
+      <div *ngFor="let day of calendarDays" class="day" (click)="selectDate(day.day, day.isCurrentMonth)" [ngClass]="{ 'active': day.isSelected, 'disabled': !day.isCurrentMonth }">
+        {{ day.day }}
+      </div>                   
+    </div>
+  </div>
+</ng-container>
