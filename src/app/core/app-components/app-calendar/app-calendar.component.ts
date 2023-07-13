@@ -17,7 +17,9 @@ export class AppCalendarComponent implements AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.selectedDateChange.emit(this.selectedDate.set({hour: 0, minute: 0, second: 0, millisecond: 0}));   
+    setTimeout(() => {
+      this.selectedDateChange.emit(this.selectedDate.set({hour: 0, minute: 0, second: 0, millisecond: 0}));         
+    });
   }
 
   generateCalendarDays() {

@@ -1,28 +1,54 @@
 <div>  
-  <!-- Calendar -->
-  <div class="row">
-    <div class="col s12 m6">
-      <div class="row" *ngIf="selectedDate">
-        <div class="col s12">
-          <p>Selected Date and Time: {{ selectedDate.toFormat('EEEE yyyy hh:mm a') }}</p>
-        </div>
-      </div>
-      
-      <div class="row" *ngIf="selectedDate">
-        <div class="col s12">
-          <ul class="collection">
-            <li *ngFor="let hour of hours" class="collection-item" (click)="selectHour(hour)" [class.active]="selectedDateTime && selectedDateTime.toFormat('yyyy-MM-dd hh:mm a') === selectedDate.toFormat('yyyy-MM-dd') + ' ' + hour">
-              {{ hour }}
-            </li>
-            
-          </ul>
-        </div>
-      </div>
+  <div class="row" *ngIf="selectedDate">
+    <div class="col s12">
+      <p>Selected Date and Time: {{ selectedDate.setLocale('es').toFormat('MMMM EEEE yyyy') }}</p>
     </div>
+  </div>
 
+  <div class="row">
+    <!-- Hours -->
+    <div class="col s12 m7">
+      <ul class="collection">
+        <li class="collection-item" *ngFor="let hour of hours; let i = index" [ngClass]="{ 'highlighted': hour.isInRange }">
+          <p class="hour-label" > {{ hour.hour }}</p>
 
-    <div class="col s12 m6">
+          <!-- <div class="hour-container" >
+            <div class="hour-rectangle" ></div>
+          </div> -->
+        </li>
+        <div class="cube">
+          
+        </div>
+      </ul>
+    </div>
+    
+    <!-- Calendar -->
+    <div class="col s12 m4 offset-m1">
       <app-calendar (selectedDateChange)="selectDateChange($event)"> </app-calendar>
     </div>
-  </div>  
+  </div>
+
+  <!-- Modal -->
+  <div id="modal1" class="modal">
+    <div class="modal-content">
+      <h4>Crear Registro</h4>
+      <form>
+        <div class="input-field">
+          <input name="titulo" type="text" id="titulo" [(ngModel)]="nuevoRegistro.titulo">
+          <label for="titulo">Título</label>
+        </div>
+        <div class="input-field">
+          <input name="horaInicio" type="text" id="horaInicio" [(ngModel)]="nuevoRegistro.horaInicio">
+          <label for="horaInicio">Hora de inicio (hh:mm)</label>
+        </div>
+        <div class="input-field">
+          <input name="horaFinal" type="text" id="horaFinal" [(ngModel)]="nuevoRegistro.horaFinal">
+          <label for="horaFinal">Hora final (hh:mm)</label>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button class="btn waves-effect waves-light" (click)="guardarRegistro()">Guardar</button>
+    </div>
+  </div>
 </div>
