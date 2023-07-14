@@ -1,36 +1,13 @@
-/* .hour-container {
+.hour-list-container {
   position: relative;
+  overflow: hidden; /* Para ocultar el desbordamiento de los divs superpuestos */
 }
-
-.hour-rectangle {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: white; 
-  opacity: 0.3; 
-} */
-
-.hour-label {
-  position: relative;
-  /* top: -16px; */
-  padding: 3px;
-  width: 4rem;
-  color: black; 
-  background-color: #fff;
-}
-
-/* .highlighted {
-  width: 100%;
-  height: 100%;
-  background-color: blue;
-}  */
 
 ul.collection {
-  /* padding-top: 10px; */
-  margin-top: 20px;
-  border: none;
+  border-top: 1px dashed #a6a6a6;
+  border-bottom: 1px dashed #a6a6a6;
+  border-left: none;
+  border-right: none;
   position: relative;
 }
 
@@ -38,15 +15,28 @@ li.collection-item {
   background-color: #fff;
   padding: 0;
   margin: 0;
-  height: 3.5rem;
-  border-top: 1px dashed #a6a6a6;
+  height: 2.5rem;
+  border-bottom: 1px dashed #a6a6a6;
 }
 
-.cube {
-  border: 1px solid red;
-  width: 80%;
-  height: 3.5rem;
+.hour-label {
+  position: relative;
+  padding: 0;
+  margin: 0;
+  
+  
+  background-color: #fff;
+}
+
+.highlight-square {
+  padding: 5px 0 0 5px;
+  margin: 0;
+  border: 1px solid #fff;
+  border-radius: 10px;
   position: absolute;
-  top: 7rem;
-  left: 5rem;
+  top: 0;
+  background-color: #003F7D; /* Puedes ajustar el color del cuadrado según tus preferencias */
+  opacity: 0.6; /* Ajusta la opacidad según tus preferencias */
+  transition: left 0.3s; /* Agrega una transición suave para el desplazamiento hacia la derecha */
+  white-space: nowrap; /* Para evitar el ajuste automático de líneas */
 }
