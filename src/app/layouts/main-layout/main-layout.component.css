@@ -4,3 +4,7 @@
   padding-left: 20px;
   padding-right: 20px;
 }
+
+.name {
+  text-transform: capitalize;
+}

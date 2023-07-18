@@ -1,7 +1,7 @@
 <div>  
   <div class="row" *ngIf="selectedDate">
     <div class="col s12">
-      <p>Selected Date and Time: {{ selectedDate.setLocale('es').toFormat('MMMM EEEE yyyy') }}</p>
+      <p>Selected Date and Time: {{ selectedDate.setLocale('es').toFormat('MMMM EEEE d yyyy') }}</p>
     </div>
   </div>
 
@@ -10,7 +10,7 @@
     <div class="col s12 m7">
       <div class="hour-list-container" #container>
         <ul class="collection">
-          <li class="collection-item" *ngFor="let hour of hours; let i = index" [ngClass]="{ 'highlighted': hour.isInRange }">
+          <li class="collection-item" *ngFor="let hour of hours; let i = index" [ngClass]="{ 'highlighted': hour.isInRange }" (click)="abrirModal(hour.hour)">
             <small class="hour-label" > {{ hour.hour }}</small>
           </li>
         </ul>

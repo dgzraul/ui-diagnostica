@@ -6,6 +6,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UsersRoutingModule } from './users-routing.module';
 import { UpdateUserComponent } from './update-user/update-user.component';
 import { DetailUserComponent } from './detail-user/detail-user.component';
+import { AppComponentsModule } from 'src/app/core/app-components/app-components.module';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { DetailUserComponent } from './detail-user/detail-user.component';
     CommonModule,
     ReactiveFormsModule,
     FormsModule,
+    AppComponentsModule,
     UsersRoutingModule
   ]
 })

@@ -1,10 +1,5 @@
-import { Component } from '@angular/core';
+import { AfterViewInit, Component } from '@angular/core';
 import { DateTime } from 'luxon';
-
-// interface Hour {
-//   date: DateTime;
-//   hour: any;
-// }
 
 interface TimeRange {
   inicio: DateTime;
@@ -17,7 +12,7 @@ interface TimeRange {
   templateUrl: './overview-schedule.component.html',
   styleUrls: ['./overview-schedule.component.css']
 })
-export class OverviewScheduleComponent {  
+export class OverviewScheduleComponent implements AfterViewInit {  
   selectedDate: DateTime | null = null; 
   hours: { hour: string; isInRange: boolean }[] = [];
 
@@ -60,12 +55,10 @@ export class OverviewScheduleComponent {
   constructor() {
     this.generateHours();
     this.sortTimeRanges();
+  }
 
-    // Inicializar el modal
-    setTimeout(() => {
-      const modal = document.querySelector('#modal1');    
-      M.Modal.init(modal); 
-    });
+  ngAfterViewInit(): void {
+    M.Modal.init(document.querySelector('#modal1'), { dismissible: true });
   }
 
   sortTimeRanges() {
@@ -127,8 +120,7 @@ export class OverviewScheduleComponent {
     return (totalMinutesInRange / (24 * minutesInHour)) * 100;
   }
   
-  getSquareZIndex(index: number): number {
-    // Restar el índice al total de rangos para que los divs se superpongan correctamente
+  getSquareZIndex(index: number): number {    
     const totalRanges = this.timeRanges.length;
     return totalRanges - index;
   }
@@ -189,33 +181,21 @@ export class OverviewScheduleComponent {
     return (totalMinutesInRange / minutesInHour) * 100;
   }
    
-   abrirModal(hora: string) {
+  abrirModal(hora: string) {
     // Abrir el modal y establecer la hora seleccionada en el formulario
     const modalInstance = M.Modal.getInstance(document.querySelector('#modal1'));
     modalInstance.open();
 
-    this.nuevoRegistro.horaInicio = hora;
+    this.nuevoRegistro.horaInicio = DateTime.fromFormat(hora, 'HH:mm').toFormat('HH:mm a');;
+    this.nuevoRegistro.horaFinal = DateTime.fromFormat(hora, 'HH:mm').plus({hours: 1}).toFormat('HH:mm a');
   }
 
-  guardarRegistro() {
-    // Lógica para guardar el registro
-
-    // Obtener la hora de inicio y hora final en formato de Luxon
-    const horaInicio = DateTime.fromFormat(this.nuevoRegistro.horaInicio, 'hh:mm a');
-    const horaFinal = DateTime.fromFormat(this.nuevoRegistro.horaFinal, 'hh:mm a');
-
-    console.log(horaInicio.toFormat('hh:mm a'), horaFinal.toFormat('hh:mm a'));
-    
-
-    // // Pintar el registro en la lista de horas
-    // const indexInicio = this.horas.indexOf(horaInicio.toFormat('hh a'));
-    // const indexFinal = this.horas.indexOf(horaFinal.toFormat('hh a'));
-    // for (let i = indexInicio; i <= indexFinal; i++) {
-    //   const horaRegistro = this.horas[i] + ' (registro)';
-    //   if (!this.registros.includes(horaRegistro)) {
-    //     this.registros.push(horaRegistro);
-    //   }
-    // }
+  guardarRegistro() {    
+    this.timeRanges.push({
+      inicio: DateTime.fromFormat(this.nuevoRegistro.horaInicio, 'hh:mm a'),
+      fin: DateTime.fromFormat(this.nuevoRegistro.horaFinal, 'hh:mm a'),
+      label: this.nuevoRegistro.titulo
+    });
 
     // Cerrar el modal
     const modalInstance = M.Modal.getInstance(document.querySelector('#modal1'));

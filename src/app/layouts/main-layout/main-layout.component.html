@@ -3,7 +3,7 @@
     <ul id="slide-out" class="sidenav sidenav-fixed">
       <li><div class="user-view">
         <a><img class="circle" src="/assets/images/logo.png"></a>
-        <a><span class="name">  John Doe</span></a>
+        <a><span class="name"> {{user.name ?? 'Bienvenido' }} {{ user.lastname ?? ''}} </span></a>
         <a><span class="email"> {{user.email}} </span></a>
       </div></li>
 

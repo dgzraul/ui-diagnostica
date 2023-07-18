@@ -1,0 +1,13 @@
+.submain-container {
+  background-color: #ffffff;
+  padding: 25px 10px;
+  border-radius: 10px;
+  margin-bottom: 2em;
+}
+
+/* Materialize Tablets */
+@media only screen and (max-width: 992px) {
+  .submain-container {
+    padding: 20px 10px;
+  }
+}

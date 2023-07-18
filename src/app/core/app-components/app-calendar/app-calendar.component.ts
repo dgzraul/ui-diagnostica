@@ -17,9 +17,9 @@ export class AppCalendarComponent implements AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    setTimeout(() => {
-      this.selectedDateChange.emit(this.selectedDate.set({hour: 0, minute: 0, second: 0, millisecond: 0}));         
-    });
+    // setTimeout(() => {
+    //   this.selectedDateChange.emit(this.selectedDate.set({hour: 0, minute: 0, second: 0, millisecond: 0}));         
+    // });
   }
 
   generateCalendarDays() {
@@ -51,6 +51,10 @@ export class AppCalendarComponent implements AfterViewInit {
     for (let i = 1; this.calendarDays.length < 42; i++) {
       this.calendarDays.push({ day: i, isCurrentMonth: false, isSelected: false });
     }
+
+    setTimeout(() => {
+      this.selectedDateChange.emit(this.selectedDate.set({hour: 0, minute: 0, second: 0, millisecond: 0}));
+    });
   }  
 
   goToPreviousMonth() {

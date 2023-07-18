@@ -1,5 +1,5 @@
-@import url('./assets/fonts/plusJakartaSans.css');
-@import url('./assets//styles/typography.css');
+@import url('./assets/fonts/Roboto.css');
+@import url('./assets/styles/typography.css');
 @import url('./assets/styles/buttons.css');
 @import url('./assets/styles/form.css');
 
@@ -9,7 +9,7 @@ body {
 }
 
 body {
-  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-family: 'Roboto';
   margin: 0;
 }
 
