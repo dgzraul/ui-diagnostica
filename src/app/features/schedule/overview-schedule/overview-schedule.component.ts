@@ -1,10 +1,17 @@
 import { AfterViewInit, Component } from '@angular/core';
+import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
 import { DateTime } from 'luxon';
+import { CalendarService } from 'src/app/core/services/calendar.service';
 
 interface TimeRange {
-  inicio: DateTime;
-  fin: DateTime;
+  start: DateTime;
+  end: DateTime;
   label: string;
+}
+
+interface Hour {
+  hour: string;
+  isInRange: boolean;
 }
 
 @Component({
@@ -13,58 +20,58 @@ interface TimeRange {
   styleUrls: ['./overview-schedule.component.css']
 })
 export class OverviewScheduleComponent implements AfterViewInit {  
+  public formModal: any; 
+  public form: FormGroup
   selectedDate: DateTime | null = null; 
-  hours: { hour: string; isInRange: boolean }[] = [];
+  hours: Hour[] = [];
+  timeRanges: TimeRange[] = [];
 
-  timeRanges: TimeRange[] = [
-    {
-      inicio: DateTime.fromObject({ hour: 8, minute: 0 }),
-      fin: DateTime.fromObject({ hour: 9, minute: 0 }),
-      label: 'label uno'
-    },
-
-    {
-      inicio: DateTime.fromObject({ hour: 9, minute: 0 }),
-      fin: DateTime.fromObject({ hour: 10, minute: 0 }),
-      label: 'label dos'
-    },
-
-    {
-      inicio: DateTime.fromObject({ hour: 10, minute: 0 }),
-      fin: DateTime.fromObject({ hour: 12, minute: 0 }),
-      label: 'label tres'
-    },
-
-    {
-      inicio: DateTime.fromObject({ hour: 13, minute: 0 }),
-      fin: DateTime.fromObject({ hour: 15, minute: 0 }),
-      label: 'label cuatro'
-    },
-
-    {
-      inicio: DateTime.fromObject({ hour: 16, minute: 0 }),
-      fin: DateTime.fromObject({ hour: 17, minute: 0 }),
-      label: 'label cuatro'
-    }
-  ];
-
-
-  registros: string[] = [];
-  nuevoRegistro: any = { titulo: '', horaInicio: '', horaFinal: '' };
-
-  constructor() {
+  constructor(
+    private formBuilder: FormBuilder,
+    private calendarService: CalendarService
+  ) {
     this.generateHours();
     this.sortTimeRanges();
+
+    this.form = this.formBuilder.group({
+      label: this.formBuilder.control(null),
+      start: this.formBuilder.control(null),
+      end: this.formBuilder.control(null)
+    });
   }
 
-  ngAfterViewInit(): void {
-    M.Modal.init(document.querySelector('#modal1'), { dismissible: true });
+  ngAfterViewInit(): void {    
+    this.formModal = M.Modal.init(document.querySelector('#formModal'), { dismissible: true });
+  }
+
+  submit(event: Event) {
+    event.preventDefault();
+    const { label, start, end } = this.form.value;
+    this.calendarService.create({
+      date: this.selectedDate?.toISODate(),
+      timeRanges: [{ 
+        label: label,
+        start: DateTime.fromFormat(start, 'hh:mm a').toISO(),
+        end: DateTime.fromFormat(end, 'hh:mm a').toISO()
+      }]
+    }).subscribe({
+      next: (data) => {
+        data.timeRanges.map((range: any) => {
+          range.start = DateTime.fromISO(range.start);
+          range.end = DateTime.fromISO(range.end);
+        });
+        this.timeRanges = data.timeRanges;
+      }
+    });
+
+    this.formModal.close();
+    this.form.reset();  
   }
 
   sortTimeRanges() {
     this.timeRanges.sort((a, b) => {
-      const inicioA = a.inicio.toMillis();
-      const inicioB = b.inicio.toMillis();
+      const inicioA = a.start.toMillis();
+      const inicioB = b.start.toMillis();
   
       if (inicioA < inicioB) {
         return -1;
@@ -89,8 +96,8 @@ export class OverviewScheduleComponent implements AfterViewInit {
 
   isHourInRange(hour: number): boolean {
     for (const range of this.timeRanges) {
-      const rangeStart = range.inicio.hour * 60 + range.inicio.minute;
-      const rangeEnd = range.fin.hour * 60 + range.fin.minute;
+      const rangeStart = range.start.hour * 60 + range.start.minute;
+      const rangeEnd = range.end.hour * 60 + range.end.minute;
       const currentHour = hour * 60;
 
       if (currentHour >= rangeStart && currentHour < rangeEnd) {
@@ -102,18 +109,18 @@ export class OverviewScheduleComponent implements AfterViewInit {
 
   getSquareTopPercentage(range: TimeRange): number {
     const minutesInHour = 60;
-    const startHour = range.inicio.hour;
-    const startMinute = range.inicio.minute;
+    const startHour = range.start.hour;
+    const startMinute = range.start.minute;
   
     return ((startHour * minutesInHour + startMinute) / (24 * minutesInHour)) * 100;
   }
   
   getSquareHeightPercentage(range: TimeRange): number {
     const minutesInHour = 60;
-    const startHour = range.inicio.hour;
-    const startMinute = range.inicio.minute;
-    const endHour = range.fin.hour;
-    const endMinute = range.fin.minute;
+    const startHour = range.start.hour;
+    const startMinute = range.start.minute;
+    const endHour = range.end.hour;
+    const endMinute = range.end.minute;
   
     const totalMinutesInRange = (endHour * minutesInHour + endMinute) - (startHour * minutesInHour + startMinute);
   
@@ -127,10 +134,10 @@ export class OverviewScheduleComponent implements AfterViewInit {
 
   getSquareWidthPercentage(range: TimeRange, container: HTMLDivElement): number {
     // const minutesInHour = 60;
-    // const startHour = range.inicio.hour;
-    // const startMinute = range.inicio.minute;
-    // const endHour = range.fin.hour;
-    // const endMinute = range.fin.minute;
+    // const startHour = range.start.hour;
+    // const startMinute = range.start.minute;
+    // const endHour = range.end.hour;
+    // const endMinute = range.end.minute;
 
     // const totalMinutesInRange = (endHour * minutesInHour + endMinute) - (startHour * minutesInHour + startMinute);
     // const widthPercentage = (totalMinutesInRange / (24 * minutesInHour)) * 100;
@@ -148,17 +155,17 @@ export class OverviewScheduleComponent implements AfterViewInit {
   }
 
   hasRangeOverlap(rangeA: TimeRange, rangeB: TimeRange): boolean {
-    const startA = rangeA.inicio.toMillis();
-    const endA = rangeA.fin.toMillis();
-    const startB = rangeB.inicio.toMillis();
-    const endB = rangeB.fin.toMillis();  
+    const startA = rangeA.start.toMillis();
+    const endA = rangeA.end.toMillis();
+    const startB = rangeB.start.toMillis();
+    const endB = rangeB.end.toMillis();  
     return startA < endB && endA > startB;
   }
 
   findOverlappingRanges(time: DateTime): TimeRange[] {
     return this.timeRanges.filter(range => {
-      const start = range.inicio;
-      const end = range.fin;
+      const start = range.start;
+      const end = range.end;
   
       return time >= start && time <= end;
     });
@@ -169,8 +176,8 @@ export class OverviewScheduleComponent implements AfterViewInit {
     let totalMinutesInRange = 0;
 
     for (const range of this.timeRanges) {
-      const rangeStart = range.inicio.hour * minutesInHour + range.inicio.minute;
-      const rangeEnd = range.fin.hour * minutesInHour + range.fin.minute;
+      const rangeStart = range.start.hour * minutesInHour + range.start.minute;
+      const rangeEnd = range.end.hour * minutesInHour + range.end.minute;
       const currentHour = hour * minutesInHour;
 
       if (currentHour >= rangeStart && currentHour < rangeEnd) {
@@ -181,29 +188,39 @@ export class OverviewScheduleComponent implements AfterViewInit {
     return (totalMinutesInRange / minutesInHour) * 100;
   }
    
-  abrirModal(hora: string) {
-    // Abrir el modal y establecer la hora seleccionada en el formulario
-    const modalInstance = M.Modal.getInstance(document.querySelector('#modal1'));
-    modalInstance.open();
-
-    this.nuevoRegistro.horaInicio = DateTime.fromFormat(hora, 'HH:mm').toFormat('HH:mm a');;
-    this.nuevoRegistro.horaFinal = DateTime.fromFormat(hora, 'HH:mm').plus({hours: 1}).toFormat('HH:mm a');
-  }
-
-  guardarRegistro() {    
-    this.timeRanges.push({
-      inicio: DateTime.fromFormat(this.nuevoRegistro.horaInicio, 'hh:mm a'),
-      fin: DateTime.fromFormat(this.nuevoRegistro.horaFinal, 'hh:mm a'),
-      label: this.nuevoRegistro.titulo
-    });
-
-    // Cerrar el modal
-    const modalInstance = M.Modal.getInstance(document.querySelector('#modal1'));
-    modalInstance.close();
-  }  
+  openFormModal(hora: string) {
+    this.IOStart?.setValue(DateTime.fromFormat(hora, 'HH:mm').toFormat('HH:mm a'));
+    this.IOEnd?.setValue(DateTime.fromFormat(hora, 'HH:mm').plus({hours: 1}).toFormat('HH:mm a'));
+    this.formModal.open();
+  } 
 
   selectDateChange(date: DateTime): void {
     this.selectedDate = date; 
-    // this.generateHours();
+    this.calendarService.findByDate(date.toISODate() as string).subscribe({
+      next: (data) => {
+        if(data) {
+          data.timeRanges.map((range: any) => {
+            range.start = DateTime.fromISO(range.start);
+            range.end = DateTime.fromISO(range.end);
+          });
+          this.timeRanges = data.timeRanges;      
+        } else {
+          this.timeRanges = [];
+        }        
+      }
+    });
   }  
+
+  // Form getters
+  get IOLabel(): AbstractControl<any, any> | null  {
+    return this.form.get('label');
+  }
+
+  get IOStart(): AbstractControl<any, any> | null  {
+    return this.form.get('start');
+  }
+
+  get IOEnd(): AbstractControl<any, any> | null  {
+    return this.form.get('end');
+  }
 }
