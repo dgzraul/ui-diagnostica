@@ -25,7 +25,8 @@ const routes: Routes = [
       { path: 'user', loadChildren: () => import('../features/users/users.module').then(m => m.UsersModule) },
       { path: 'office', loadChildren: () => import('../features/offices/offices.module').then(m => m.OfficesModule) },
       { path: 'patient', loadChildren: () => import('../features/patients/patients.module').then(m => m.PatientsModule) },
-      { path: 'schedule', loadChildren: () => import('../features/schedule/schedule.module').then(m => m.ScheduleModule) }
+      { path: 'schedule', loadChildren: () => import('../features/schedule/schedule.module').then(m => m.ScheduleModule) },
+      { path: 'form', loadChildren: () => import('../features/forms/forms.module').then(m => m.FormssModule) },
       // { path: '**', redirectTo: 'user' }
     ]
   },

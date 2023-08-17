@@ -1,0 +1,35 @@
+<!-- questionnaire-preview.component.html -->
+<div *ngFor="let section of sections">
+  <h1>{{ section.title }}</h1>
+  <p>{{ section.description }}</p>
+  <div *ngFor="let question of section.questions" class="row">
+    <div class="row">
+      <label>{{ question.question }}</label>
+      <div *ngIf="question.type === 'shortAnswer' || question.type === 'longAnswer'">
+        <input type="text" />
+      </div>
+
+      <div *ngIf="question.type === 'options' || question.type === 'checkboxes'">
+        <div *ngFor="let option of question.options">
+          <p>
+            <label *ngIf="question.type === 'options'">
+              <input type="radio" name="{{ question.question }}" />
+              <span> {{ option.option }} </span>
+            </label>
+  
+            <label *ngIf="question.type === 'checkboxes'">
+              <input type="checkbox" name="{{ question.question }}" />
+              <span> {{ option.option }} </span>
+            </label>
+          </p>
+        </div>
+      </div>
+      <div *ngIf="question.type === 'date'">
+        <input type="date" />
+      </div>
+      <div *ngIf="question.type === 'time'">
+        <input type="time" />
+      </div>
+    </div>
+  </div>
+</div>

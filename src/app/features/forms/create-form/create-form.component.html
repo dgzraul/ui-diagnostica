@@ -1,0 +1,49 @@
+<!-- questionnaire-form.component.html -->
+<form [formGroup]="questionnaireForm" (ngSubmit)="onSubmit()">
+  <div formArrayName="sections">
+    <div *ngFor="let section of sections.controls; let sectionIndex = index">
+      <div [formGroupName]="sectionIndex">
+        <h2>
+          <input formControlName="title" placeholder="Title" required />
+        </h2>
+        <p>
+          <input formControlName="description" placeholder="Description" />
+        </p>
+        <div formArrayName="questions">
+          <div *ngFor="let question of getQuestions(sectionIndex).controls; let questionIndex = index">
+            <div [formGroupName]="questionIndex">
+              <p>
+                <select formControlName="type" required>
+                  <option value="shortAnswer">Short Answer</option>
+                  <option value="longAnswer">Long Answer</option>
+                  <option value="options">Options</option>
+                  <option value="checkboxes">Checkboxes</option>
+                  <option value="date">Date</option>
+                  <option value="time">Time</option>
+                </select>
+              </p>
+              <p>
+                <input formControlName="question" placeholder="Question" required />
+              </p>
+              <div formArrayName="options" *ngIf="question.get('type')?.value === 'options' || question.get('type')?.value === 'checkboxes'">
+                <div *ngFor="let option of getOptions(questionIndex).controls; let optionIndex = index">
+                  <div [formGroupName]="optionIndex">
+                    <input formControlName="option"
+                      [placeholder]="question.get('type')?.value === 'options' ? 'Option' : 'Checkbox'" required />
+                    <button type="button" (click)="removeOption(questionIndex, optionIndex)">Remove</button>
+                  </div>
+                </div>
+                <button type="button" (click)="addOption(questionIndex)">Add {{ question.get('type')?.value === 'options' ? 'Option' : 'Checkbox' }}</button>
+              </div>
+              <button type="button" (click)="removeQuestion(sectionIndex, questionIndex)">Remove Question</button>
+            </div>
+          </div>
+          <button type="button" (click)="addQuestion(sectionIndex)">Add Question</button>
+        </div>
+        <button type="button" (click)="removeSection(sectionIndex)">Remove Section</button>
+      </div>
+    </div>
+    <!-- <button type="button" (click)="addSection()">Add Section</button> -->
+  </div>
+  <button type="submit">Save Questionnaire</button>
+</form>

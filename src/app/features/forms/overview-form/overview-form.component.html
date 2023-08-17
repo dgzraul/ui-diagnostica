@@ -1,0 +1,11 @@
+<!-- questionnaire-preview.component.html -->
+<div *ngFor="let section of sections">
+  <h1>{{ section.title }}</h1>
+  <p>{{ section.description }}</p>
+</div>
+
+<div class="row">
+  <div class="col s12">
+    <a [routerLink]="['/form/register']"> Agregar sección </a>
+  </div>
+</div>
