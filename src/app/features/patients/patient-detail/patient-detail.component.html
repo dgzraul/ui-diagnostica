@@ -10,10 +10,46 @@
       </div>
     </div>
 
+    <div class="row" *ngFor="let medicalHistory of patient.medicalHistories">
+      <div class="col s5" >
+        <p> {{ medicalHistory.description }} </p>
+      </div>
+
+      <div class="col s5">
+        <p> {{ medicalHistory.createdAt }} </p>
+      </div>
+
+      <div class="col s2">
+        <button (click)="deleteMedicalHistory(medicalHistory._id)"> <i class="material-icons"> close </i> </button>
+      </div>
+    </div>
+
     <div class="row">
       <div class="col s12">
         <a [routerLink]="['/patient/update', patient._id]"> Actualizar </a>
         <a (click)="delete()"> Eliminar </a>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col s12">
+        <a [routerLink]="['/medical-history/create/patient', patient._id]"> Agregar observacion </a>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col s12">
+        <select name="officeControl" id="officeControl" [formControl]="officeControl">
+          <option *ngFor="let office of offices" [ngValue]="office"> {{ office.name }} </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="row" *ngIf="currentOffice">
+      <div class="col s12">
+        <select name="formControl" id="formControl" [formControl]="formControl">
+          <option *ngFor="let form of currentOffice.forms" [ngValue]="form"> {{ form.version }} {{ form.main ? ' - main ' : '' }} </option>
+        </select>
       </div>
     </div>
   </div>
