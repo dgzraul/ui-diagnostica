@@ -52,5 +52,47 @@
         </select>
       </div>
     </div>
+
+    <ng-container *ngIf="sections">
+      <div class="row" *ngFor="let section of sections">
+        <div class="col s12">
+          <div class="row">
+            <div class="col s12">
+              <h1> {{ section.title }} </h1>
+            </div>
+          </div>
+
+          <div class="row" *ngFor="let question of section.questions">
+            <div class="col s12">
+              <div class="row">
+                <label>{{ question.question }}</label>
+                <div *ngIf="question.type === 'shortAnswer' || question.type === 'longAnswer'">
+                </div>
+          
+                <div *ngIf="question.type === 'options' || question.type === 'checkboxes'">
+                  <div *ngFor="let option of question.options">
+                    <p>
+                      <label *ngIf="question.type === 'options'">
+                        <span> {{ option.option }} </span>
+                      </label>
+            
+                      <label *ngIf="question.type === 'checkboxes'">
+                        <span> {{ option.option }} </span>
+                      </label>
+                    </p>
+                  </div>
+                </div>
+                <div *ngIf="question.type === 'date'">
+                  <input type="date" />
+                </div>
+                <div *ngIf="question.type === 'time'">
+                  <input type="time" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
   </div>
 </ng-container>

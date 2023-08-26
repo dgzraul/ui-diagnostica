@@ -58,7 +58,6 @@ export class PatientDetailComponent {
         next: (forms: any) => {
           this.currentOffice.forms = forms; 
           this.formControl.setValue(this.currentOffice.forms.filter((form: any) => form.main)[0]);
-          // this.sections = this.currentOffice.forms.filter((form: any) => form.main)[0];          
         }
       });
     });
