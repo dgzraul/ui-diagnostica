@@ -70,7 +70,6 @@ export class UpdateUserComponent {
     data.birthday = this.stringToDate(this.form.get('birthday')?.value);
     this.usersService.update(this.user._id, data).subscribe({
       next: (user: any) => {
-        this.authenticationService.setSystemAccount(user);
         this.router.navigate(['/user/profile']);
       }
     });
