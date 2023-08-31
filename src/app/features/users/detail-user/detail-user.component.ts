@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
-import { UsersService } from '../users.service';
 import { from } from 'rxjs';
+
+// Services
 import { AuthenticationService } from 'src/app/core/services/authentication.service';
+import { UsersService } from 'src/app/core/services/users.service';
 
 @Component({
   selector: 'app-detail-user',

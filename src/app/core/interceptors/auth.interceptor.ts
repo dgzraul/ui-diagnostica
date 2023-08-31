@@ -12,6 +12,8 @@ export class AuthInterceptorService implements HttpInterceptor {
   ) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    if(!this.authenticationService.firebaseAccount) return next.handle(req);
+    
     return from(this.authenticationService.firebaseAccount!.getIdToken()).pipe(
       switchMap((token: string) => {
         return next.handle(token ? req.clone({ headers: req.headers.set('authorization', `Bearer ${token}`)}) : req );

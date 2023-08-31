@@ -28,4 +28,8 @@ export class UsersService {
   update(id: string, data: any): Observable<any> {
     return this.http.put<any>(`${this.api}/${id}`, data);
   }
+
+  recoveryPassword(email: string): Observable<any> {
+    return this.http.get<any>(`${this.api}/recovery_password`, {params: {email: email}});
+  }    
 }

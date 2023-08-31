@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 
 // Services
 import { AuthenticationService } from 'src/app/core/services/authentication.service';
+import { UsersService } from 'src/app/core/services/users.service';
 
 // Validators
 import { emailValidator } from 'src/app/core/validators';
@@ -19,6 +20,7 @@ export class SingInComponent {
 
   constructor(
     private service: AuthenticationService,
+    private userService: UsersService,
     private formBuilder: FormBuilder,
     private router: Router
   ) { 
@@ -71,12 +73,9 @@ export class SingInComponent {
       return; 
     }
 
-    try {
-      await this.service.sendPasswordResetEmail(this.IOEmail?.value);
+    this.userService.recoveryPassword(this.IOEmail!.value).subscribe(() => {
       M.toast({html: 'Correo de recuperación enviado'});
-    } catch (error: any) {
-      M.toast({html: error});
-    }
+    });
   }
 
   // Form getters

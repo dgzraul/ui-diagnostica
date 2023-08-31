@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Auth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, signOut, UserCredential, FacebookAuthProvider, sendPasswordResetEmail, User } from '@angular/fire/auth';
+import { Auth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, signOut, UserCredential, FacebookAuthProvider, User, verifyPasswordResetCode, confirmPasswordReset } from '@angular/fire/auth';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
@@ -10,7 +10,7 @@ export class AuthenticationService {
   public readonly firebaseAccount$: Observable<User | null>;
 
   constructor(
-    private auth: Auth
+    private auth: Auth,
   ) {             
     this._firebaseAccountSubject = new BehaviorSubject<User | null>(this.auth.currentUser);
     this.firebaseAccount$ = this._firebaseAccountSubject.asObservable();
@@ -169,35 +169,23 @@ export class AuthenticationService {
   }
 
   /**
-   * Recovery password (firebase)
+   * Validate recovery password code (firebase)
    * @returns 
    */
-  sendPasswordResetEmail(email: string): Promise<void> {
+  public validateRecoveryPasswordCode(code: string): Promise<string> {
     return new Promise(async (resolve, reject) => {
       try {
-        await sendPasswordResetEmail(this.auth, email);
-        return resolve();
-      } catch (error: any) {        
+        const value = await verifyPasswordResetCode(this.auth, code);
+        return resolve(value);
+      } catch (error: any) {
         switch(error.code) {
-          case 'auth/invalid-email': {
-            return reject('El formato del correo electrónico es invalido');
-          }
-
-          case 'auth/user-disabled': {
-            return reject('La cuenta ha sido deshabilitada');
+          case 'auth/expired-action-code': {
+            return reject('Código de recuperación expirado');
           }
   
-          case 'auth/user-not-found': {
-            return reject('No se encontró ningún usuario con la dirección de correo electrónico proporcionado');
+          case 'auth/invalid-action-code': {
+            return reject('Código de recuperación inválido');
           }
-  
-          case 'auth/too-many-requests': {
-            return reject('Se ha alcanzado el límite de solicitudes. Espera un momento antes de intentarlo nuevamente.');
-          } 
-
-          case 'auth/missing-email': {
-            return reject('No se ha detectado ningún correo electrónico');
-          }          
   
           default: {
             return reject('Lo sentimos, algo ha salido mal, inténtalo más tarde');
@@ -206,6 +194,39 @@ export class AuthenticationService {
       }
     });
   }
+
+  /**
+   * Confirm password reset (firebase)
+   * @param code
+   * @param newPassword
+   * @returns
+   */
+  public confirmPasswordReset(code: string, newPassword: string): Promise<void> {  
+    return new Promise(async (resolve, reject) => {
+      try {
+        await confirmPasswordReset(this.auth, code, newPassword);
+        return resolve();
+      } catch (error: any) {
+        switch(error.code) {
+          case 'auth/expired-action-code': {
+            return reject('Código de recuperación expirado');
+          }
+  
+          case 'auth/invalid-action-code': {
+            return reject('Código de recuperación inválido');
+          }
+  
+          case 'auth/weak-password': {
+            return reject('La contraseña es débil');
+          }
+  
+          default: {
+            return reject('Lo sentimos, algo ha salido mal, inténtalo más tarde');
+          }
+        }
+      }
+    }); 
+  }  
 
   /**
    * Currently firebase account

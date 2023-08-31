@@ -7,7 +7,7 @@ import { User } from 'firebase/auth';
 
 // Serivces
 import { AuthenticationService } from 'src/app/core/services/authentication.service';
-import { UsersService } from 'src/app/features/users/users.service';
+import { UsersService } from 'src/app/core/services/users.service';
 
 // Variables
 import { environment } from 'src/environments/environment';
