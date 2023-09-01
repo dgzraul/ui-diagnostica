@@ -14,6 +14,7 @@ import { passwordMatchValidator, passwordValidator } from 'src/app/core/validato
   styleUrls: ['./recovery-password.component.css']
 })
 export class RecoveryPasswordComponent {
+  public recoveryLoader: boolean = true;
   public form: FormGroup;
   public IOPasswordType: boolean = false; 
 
@@ -46,6 +47,8 @@ export class RecoveryPasswordComponent {
       } catch (error: any) {
         M.toast({html: error});
         this.router.navigate(['/authentication']);
+      } finally {
+        this.recoveryLoader = false;
       }
     }
   }
@@ -56,15 +59,23 @@ export class RecoveryPasswordComponent {
 
   public async submit($event: Event): Promise<void> {
     $event.preventDefault();
+
+    // rebound clicks
+    if(this.recoveryLoader) return; 
+    this.recoveryLoader = true;
+
     try {
       // update password
       await this.authenticationService.confirmPasswordReset(this.code!, this.IOPassword!.value);
       // auto sing in
-      await this.authenticationService.signInWithEmailAndPassword(this.email!, this.IOPassword!.value);
+      const credential = await this.authenticationService.signInWithEmailAndPassword(this.email!, this.IOPassword!.value);
+      this.authenticationService.setFirebaseAccount(credential.user);
       this.router.navigate(['']);
     } catch (error: any) {
-      this.router.navigate(['/authentication']);
       M.toast({html: error});
+      this.router.navigate(['/authentication']);
+    } finally {
+      this.recoveryLoader = false;
     }
   }  
 

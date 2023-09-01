@@ -43,7 +43,8 @@ export class SingInComponent {
     this.loginLoader = true; 
 
     try {
-      await this.service.signInWithEmailAndPassword(this.IOEmail!.value, this.IOPassword!.value);  
+      const credential = await this.service.signInWithEmailAndPassword(this.IOEmail!.value, this.IOPassword!.value);  
+      this.service.setFirebaseAccount(credential.user);
       this.router.navigate(['']);        
     } catch (error: any) {
       M.toast({html: error});
@@ -82,8 +83,13 @@ export class SingInComponent {
       return; 
     }
 
+    // rebound clicks
+    if(this.loginLoader) return;
+    this.loginLoader = true; 
+
     this.userService.recoveryPassword(this.IOEmail!.value).subscribe(() => {
       M.toast({html: 'Correo de recuperación enviado'});
+      this.loginLoader = false;
     });
   }
 
