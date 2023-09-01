@@ -1,11 +1,9 @@
-.section-logo {}
-
 .home-logo-container {
   margin-top: 40px;
 }
 
 .home-logo {
-  width: 80%;
+  width: 100%;
   height: auto;
 }
 

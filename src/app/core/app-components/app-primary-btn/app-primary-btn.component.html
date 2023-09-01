@@ -1,0 +1,11 @@
+<ng-container>
+  <button [type]="type" [disabled]="disabled">
+    <ng-container *ngIf="loading; else NoLoading">
+      <i class="loader"></i> 
+    </ng-container>
+    
+    <ng-template #NoLoading>
+      <ng-content></ng-content>
+    </ng-template>
+  </button>
+</ng-container>

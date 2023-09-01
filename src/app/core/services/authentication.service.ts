@@ -42,7 +42,7 @@ export class AuthenticationService {
           }
   
           case 'auth/user-disabled': {
-            return reject('La cuenta ha sido deshabilitada, por favor contacta a soporte');
+            return reject('La cuenta ha sido deshabilitada, contacte a soporte');
           }
   
           default: {            

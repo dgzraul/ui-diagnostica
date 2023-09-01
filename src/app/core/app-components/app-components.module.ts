@@ -7,6 +7,7 @@ import { AppCalendarComponent } from './app-calendar/app-calendar.component';
 import { AppPageContainerComponent } from './app-page-container/app-page-container.component';
 import { AppPageContainerTitleComponent } from './app-page-container-title/app-page-container-title.component';
 import { AppPageSubcontainerComponent } from './app-page-subcontainer/app-page-subcontainer.component';
+import { AppPrimaryBtnComponent } from './app-primary-btn/app-primary-btn.component';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import { AppPageSubcontainerComponent } from './app-page-subcontainer/app-page-s
     AppCalendarComponent,
     AppPageContainerComponent,
     AppPageContainerTitleComponent,
-    AppPageSubcontainerComponent
+    AppPageSubcontainerComponent,
+    AppPrimaryBtnComponent
   ],
   imports: [
     CommonModule
@@ -24,7 +26,8 @@ import { AppPageSubcontainerComponent } from './app-page-subcontainer/app-page-s
     AppCalendarComponent,
     AppPageContainerComponent,
     AppPageContainerTitleComponent,
-    AppPageSubcontainerComponent
+    AppPageSubcontainerComponent,
+    AppPrimaryBtnComponent
   ]
 })
 export class AppComponentsModule { }

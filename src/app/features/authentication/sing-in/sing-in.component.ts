@@ -15,6 +15,7 @@ import { emailValidator } from 'src/app/core/validators';
   styleUrls: ['./sing-in.component.css']
 })
 export class SingInComponent {
+  public loginLoader: boolean = false; 
   public form: FormGroup; 
   public IOPasswordType: boolean = false; 
 
@@ -36,18 +37,25 @@ export class SingInComponent {
 
   public async submit($event: Event): Promise<void> {
     $event.preventDefault(); 
-    
+
+    // rebound clicks
+    if(this.loginLoader) return; 
+    this.loginLoader = true; 
+
     try {
       await this.service.signInWithEmailAndPassword(this.IOEmail!.value, this.IOPassword!.value);  
-      this.router.navigate(['']);
+      this.router.navigate(['']);        
     } catch (error: any) {
       M.toast({html: error});
+    } finally {
+      this.loginLoader = false;
     }
   }
 
   public async submitGoogleSocialAuth(): Promise<void> {
     try {
-      await this.service.loginWithGoogle();
+      const credential = await this.service.loginWithGoogle();
+      this.service.setFirebaseAccount(credential.user);
       this.router.navigate(['']);
     } catch (error: any) {
       M.toast({html: error});
@@ -56,7 +64,8 @@ export class SingInComponent {
 
   public async submitFacebookSocialAuth(): Promise<void> {
     try {
-      await this.service.loginWithFacebook();
+      const credential = await this.service.loginWithFacebook();
+      this.service.setFirebaseAccount(credential.user);
       this.router.navigate(['']);
     } catch (error: any) {
       M.toast({html: error});

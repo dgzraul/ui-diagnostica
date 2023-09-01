@@ -14,7 +14,8 @@ import { passwordValidator, passwordMatchValidator, emailValidator } from 'src/a
   styleUrls: ['./sing-up.component.css']
 })
 export class SingUpComponent {
-  form: FormGroup; 
+  public loginLoader: boolean = false;
+  public form: FormGroup; 
   public IOPasswordType: boolean = false; 
 
   constructor(
@@ -35,19 +36,26 @@ export class SingUpComponent {
 
   public async submit($event: Event): Promise<void> {
     $event.preventDefault(); 
+
+    // rebound clicks
+    if(this.loginLoader) return;
+    this.loginLoader = true; 
     
     try {
-      let credential = await this.service.createUserWithEmailAndPassword(this.IOEmail!.value, this.IOPassword!.value);  
+      const credential = await this.service.createUserWithEmailAndPassword(this.IOEmail!.value, this.IOPassword!.value);  
       this.service.setFirebaseAccount(credential.user);
       this.router.navigate(['']);
     } catch (error: any) {
       M.toast({html: error});
+    } finally {
+      this.loginLoader = false;
     }
   }
 
   public async submitGoogleSocialAuth(): Promise<void> {
     try {
-      await this.service.loginWithGoogle();
+      const credential = await this.service.loginWithGoogle();
+      this.service.setFirebaseAccount(credential.user);
       this.router.navigate(['']);
     } catch (error: any) {
       M.toast({html: error});
@@ -56,7 +64,8 @@ export class SingUpComponent {
 
   public async submitFacebookSocialAuth(): Promise<void> {
     try {
-      await this.service.loginWithFacebook();
+      const credential = await this.service.loginWithFacebook();
+      this.service.setFirebaseAccount(credential.user);
       this.router.navigate(['']);
     } catch (error: any) {
       M.toast({html: error});
