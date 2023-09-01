@@ -1,17 +1,22 @@
 .section-logo {}
 
+.home-logo-container {
+  margin-top: 40px;
+}
+
 .home-logo {
   width: 80%;
   height: auto;
 }
 
 /* RESPONSIVE STYLES */
-/* Materialize Desktop */
-@media only screen and (max-width: 1380px) {
-  
-}
+/* Materialize Desktop Large */
+@media only screen and (min-width: 1200px) { }
 
-/* Materialize Tablets */
+/* Materialize Desktop */
+@media only screen and (max-width: 1200px) { }
+
+/* Materialize Tablet */
 @media only screen and (max-width: 992px) {
   .section-logo {
     margin-bottom: 4em;
@@ -24,6 +29,4 @@
 }
 
 /* Materialize Mobile */
-@media only screen and (max-width: 600px) {
-  
-}
+@media only screen and (max-width: 600px) { }

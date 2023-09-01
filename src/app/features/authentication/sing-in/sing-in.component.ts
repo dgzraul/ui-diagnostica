@@ -66,9 +66,9 @@ export class SingInComponent {
   public async sendPasswordResetEmail(): Promise<void> {
     if(this.IOEmail?.errors) {
       if(this.IOEmail?.hasError('required')) {
-        M.toast({html: 'Por favor Ingrese su correo electrónico'});
+        M.toast({html: 'Ingrese su correo electrónico'});
       } else if(this.IOEmail?.hasError('invalidEmail')) {
-        M.toast({html: 'El formato del correo electrónico es invalido'});
+        M.toast({html: 'Correo electrónico con formato invalido'});
       }
       return; 
     }
