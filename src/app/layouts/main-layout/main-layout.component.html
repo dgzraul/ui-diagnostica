@@ -1,6 +1,18 @@
 <ng-container *ngIf="!findProfileLoading && !createProfileLoading; else LoadingSection">
   <header>  
-    <ul id="slide-out" class="sidenav sidenav-fixed">
+    <!-- navbar -->
+    <div class="navbar-fixed show-on-medium-and-down hide-on-large-only">
+      <nav>
+        <div class="nav-wrapper">
+          <a data-target="slide-out" class="sidenav-trigger"><i class="material-icons menu-icon">menu</i></a>
+  
+          <h4 class="brand-logo" style="font-weight: 600;"> Zeganet </h4>  
+        </div>
+      </nav>
+    </div>
+
+    <!-- Sidenav -->
+    <ul id="slide-out" class="sidenav sidenav-fixed" (click)="closeSidenav()" #sidenav>
       <li><div class="user-view">
         <a><img class="circle" src="/assets/images/logo.png"></a>
         <a><span class="name"> {{user.name ?? 'Bienvenido' }} {{ user.lastname ?? ''}} </span></a>

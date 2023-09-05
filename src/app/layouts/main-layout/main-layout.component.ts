@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { from } from 'rxjs';
 
@@ -18,8 +18,11 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./main-layout.component.css']
 })
 export class MainLayoutComponent {
-  // private sidenav: any;
+  // DOM element
+  @ViewChild('sidenav', { static: false }) sidenavElement?: ElementRef;  
+
   // variables
+  private sidenav: any;
   public projectVersion: string = environment.version;
   public user: any | null; 
 
@@ -32,8 +35,6 @@ export class MainLayoutComponent {
     private authenticationService: AuthenticationService,
     private router: Router
     ) {    
-    // this.sidenav = M.Sidenav.init(document.querySelectorAll('.sidenav'), {})[0];
-
     // Get token
     from(this.authenticationService.firebaseAccount!.getIdToken()).subscribe({
       next: (token) => {    
@@ -59,8 +60,8 @@ export class MainLayoutComponent {
           },
           complete: () => {
             this.findProfileLoading = false;
+            this.loadHTMLElements();
           }
-
         });            
       }
     });
@@ -71,6 +72,12 @@ export class MainLayoutComponent {
         this.router.navigate(['/authentication']);    
       }      
     });
+  }
+
+  private loadHTMLElements(): void {
+    setTimeout(() => {
+      this.sidenav = M.Sidenav.init(this.sidenavElement?.nativeElement, {});      
+    }, 1);
   }
 
   /**
@@ -90,6 +97,12 @@ export class MainLayoutComponent {
       }
     });
   } 
+
+  closeSidenav(): void {
+    if(screen.width <= 992 && this.sidenav.isOpen) {
+      this.sidenav.close();
+    }
+  }
 
   logout() {
     this.authenticationService.logout().subscribe(() => {});
